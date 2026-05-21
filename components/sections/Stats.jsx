@@ -1,0 +1,71 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+
+const STATS = [
+  { value: 5,   suffix: '+', label: 'Projects Built',   icon: 'fas fa-box-open',   color: 'bg-sky/15   border-sky/30' },
+  { value: 3,   suffix: '+', label: 'Tech Stacks',      icon: 'fas fa-tools',      color: 'bg-petal/30 border-petal/40' },
+  { value: 100, suffix: '%', label: 'Passion for Code', icon: 'fas fa-heart',      color: 'bg-sky/15   border-sky/30' },
+  { value: 1,   suffix: '',  label: 'Country (PH)',     icon: 'fas fa-map-marker-alt', color: 'bg-leaf/30  border-leaf/40' },
+];
+
+function Counter({ target, suffix }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const duration = 1400;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [inView, target]);
+
+  return (
+    <span ref={ref} className="font-display font-800 text-4xl text-deep tabular-nums">
+      {count}{suffix}
+    </span>
+  );
+}
+
+export default function Stats() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  return (
+    <section ref={ref} className="py-16 relative z-10">
+      <div className="max-w-5xl mx-auto px-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {STATS.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 30, scale: 0.92 }}
+              animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{ delay: i * 0.1, type: 'spring', stiffness: 260, damping: 20 }}
+              className={`chiikawa-card p-6 text-center border-2 ${stat.color}`}
+              whileHover={{ y: -6, scale: 1.03 }}
+            >
+              <motion.div
+                className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mx-auto mb-2 border border-sky/20 shadow-sm"
+                whileHover={{ rotate: [0, -10, 10, 0] }}
+                transition={{ duration: 0.4 }}
+              >
+                <i className={`${stat.icon} text-mid text-sm`} />
+              </motion.div>
+              <Counter target={stat.value} suffix={stat.suffix} />
+              <p className="text-deep/55 text-xs font-body font-700 mt-1 tracking-wide">{stat.label}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
