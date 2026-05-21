@@ -1,27 +1,39 @@
-import './globals.css';
+import './globals.css'
+import localFont from 'next/font/local'
+import { Space_Mono } from 'next/font/google'
+
+const daruma = localFont({
+  src: '../public/fonts/DarumadropOne-Regular.ttf',
+  variable: '--font-daruma',
+  display: 'swap',
+})
+
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-space',
+})
 
 export const metadata = {
   title: 'eeve',
   description: 'CJ Steeve Cadenas — Web Developer & UI Designer.',
-  icons: { icon: '/logo.png' },
-};
+}
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${daruma.variable} ${spaceMono.variable}`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Daruma+Drop+One&family=Space+Mono:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
         <link
           rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
         />
       </head>
-      <body>{children}</body>
+      <body className={`${daruma.variable} ${spaceMono.variable}`}>{children}</body>
     </html>
-  );
+  )
 }

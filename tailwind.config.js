@@ -20,9 +20,9 @@ module.exports = {
         sun:     '#FFF0C2',
       },
       fontFamily: {
-        display: ['"Daruma Drop One"', 'cursive'],
-        body:    ['"Daruma Drop One"', 'cursive'],
-        mono:    ['"Space Mono"', 'monospace'],
+        display: ['var(--font-daruma)', 'cursive'],
+        body:    ['var(--font-daruma)', 'cursive'],
+        mono:    ['var(--font-space)', 'monospace'],
       },
       borderRadius: {
         '4xl': '2rem',

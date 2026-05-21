@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ── Google Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Daruma+Drop+One&family=Space+Mono:wght@400;700&display=swap');
+
 
 /* ═══════════════════════════════════════════════════
    🎨 COLOR PALETTE — Edit these to retheme the whole site
@@ -45,8 +45,7 @@ html {
 }
 
 body {
-  font-family: 'Daruma Drop One', cursive;
-  background-image: url('/background.png');
+  font-family: var(--font-daruma), cursive;
   background-color: var(--cream);
   background-size: cover;
   background-attachment: fixed;
@@ -202,7 +201,7 @@ body {
   border: 2px solid rgba(122,170,206,0.38);
   border-radius: 1rem;
   padding: 12px 16px;
-  font-family: 'Daruma Drop One', cursive;
+  font-family: var(--font-daruma), cursive;
   font-size: 0.92rem;
   color: var(--deep);
   outline: none;
@@ -215,7 +214,6 @@ body {
   box-shadow: 0 0 0 4px rgba(156,213,255,0.22);
 }
 
-/* ── Buttons ── */
 .btn-chiikawa {
   display: inline-flex;
   align-items: center;
@@ -223,7 +221,7 @@ body {
   gap: 8px;
   padding: 10px 28px;
   border-radius: 999px;
-  font-family: 'Daruma Drop One', cursive;
+  font-family: var(--font-daruma), cursive;
   font-size: 0.92rem;
   font-weight: 700;
   text-decoration: none;

@@ -10,6 +10,26 @@ exports.id = "vendor-chunks/next";
 exports.ids = ["vendor-chunks/next"];
 exports.modules = {
 
+/***/ "(rsc)/./node_modules/next/font/google/target.css?{\"path\":\"app\\\\layout.jsx\",\"import\":\"Space_Mono\",\"arguments\":[{\"subsets\":[\"latin\"],\"weight\":[\"400\",\"700\"],\"variable\":\"--font-space\"}],\"variableName\":\"spaceMono\"}":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/font/google/target.css?{"path":"app\\layout.jsx","import":"Space_Mono","arguments":[{"subsets":["latin"],"weight":["400","700"],"variable":"--font-space"}],"variableName":"spaceMono"} ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/***/ ((module) => {
+
+eval("// Exports\nmodule.exports = {\n\t\"style\": {\"fontFamily\":\"'__Space_Mono_e8b655', '__Space_Mono_Fallback_e8b655'\",\"fontStyle\":\"normal\"},\n\t\"className\": \"__className_e8b655\",\n\t\"variable\": \"__variable_e8b655\"\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9mb250L2dvb2dsZS90YXJnZXQuY3NzP3tcInBhdGhcIjpcImFwcFxcXFxsYXlvdXQuanN4XCIsXCJpbXBvcnRcIjpcIlNwYWNlX01vbm9cIixcImFyZ3VtZW50c1wiOlt7XCJzdWJzZXRzXCI6W1wibGF0aW5cIl0sXCJ3ZWlnaHRcIjpbXCI0MDBcIixcIjcwMFwiXSxcInZhcmlhYmxlXCI6XCItLWZvbnQtc3BhY2VcIn1dLFwidmFyaWFibGVOYW1lXCI6XCJzcGFjZU1vbm9cIn0iLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBLFdBQVcsMEZBQTBGO0FBQ3JHO0FBQ0E7QUFDQSIsInNvdXJjZXMiOlsid2VicGFjazovL3NlaWppY3h6LXBvcnRmb2xpby8uL25vZGVfbW9kdWxlcy9uZXh0L2ZvbnQvZ29vZ2xlL3RhcmdldC5jc3M/NDJiYyJdLCJzb3VyY2VzQ29udGVudCI6WyIvLyBFeHBvcnRzXG5tb2R1bGUuZXhwb3J0cyA9IHtcblx0XCJzdHlsZVwiOiB7XCJmb250RmFtaWx5XCI6XCInX19TcGFjZV9Nb25vX2U4YjY1NScsICdfX1NwYWNlX01vbm9fRmFsbGJhY2tfZThiNjU1J1wiLFwiZm9udFN0eWxlXCI6XCJub3JtYWxcIn0sXG5cdFwiY2xhc3NOYW1lXCI6IFwiX19jbGFzc05hbWVfZThiNjU1XCIsXG5cdFwidmFyaWFibGVcIjogXCJfX3ZhcmlhYmxlX2U4YjY1NVwiXG59O1xuIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/font/google/target.css?{\"path\":\"app\\\\layout.jsx\",\"import\":\"Space_Mono\",\"arguments\":[{\"subsets\":[\"latin\"],\"weight\":[\"400\",\"700\"],\"variable\":\"--font-space\"}],\"variableName\":\"spaceMono\"}\n");
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/next/font/local/target.css?{\"path\":\"app\\\\layout.jsx\",\"import\":\"\",\"arguments\":[{\"src\":\"../public/fonts/DarumadropOne-Regular.ttf\",\"variable\":\"--font-daruma\",\"display\":\"swap\"}],\"variableName\":\"daruma\"}":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/font/local/target.css?{"path":"app\\layout.jsx","import":"","arguments":[{"src":"../public/fonts/DarumadropOne-Regular.ttf","variable":"--font-daruma","display":"swap"}],"variableName":"daruma"} ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/***/ ((module) => {
+
+eval("// Exports\nmodule.exports = {\n\t\"style\": {\"fontFamily\":\"'__daruma_16a834', '__daruma_Fallback_16a834'\"},\n\t\"className\": \"__className_16a834\",\n\t\"variable\": \"__variable_16a834\"\n};\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9mb250L2xvY2FsL3RhcmdldC5jc3M/e1wicGF0aFwiOlwiYXBwXFxcXGxheW91dC5qc3hcIixcImltcG9ydFwiOlwiXCIsXCJhcmd1bWVudHNcIjpbe1wic3JjXCI6XCIuLi9wdWJsaWMvZm9udHMvRGFydW1hZHJvcE9uZS1SZWd1bGFyLnR0ZlwiLFwidmFyaWFibGVcIjpcIi0tZm9udC1kYXJ1bWFcIixcImRpc3BsYXlcIjpcInN3YXBcIn1dLFwidmFyaWFibGVOYW1lXCI6XCJkYXJ1bWFcIn0iLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBLFdBQVcsNkRBQTZEO0FBQ3hFO0FBQ0E7QUFDQSIsInNvdXJjZXMiOlsid2VicGFjazovL3NlaWppY3h6LXBvcnRmb2xpby8uL25vZGVfbW9kdWxlcy9uZXh0L2ZvbnQvbG9jYWwvdGFyZ2V0LmNzcz9mYzYzIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIEV4cG9ydHNcbm1vZHVsZS5leHBvcnRzID0ge1xuXHRcInN0eWxlXCI6IHtcImZvbnRGYW1pbHlcIjpcIidfX2RhcnVtYV8xNmE4MzQnLCAnX19kYXJ1bWFfRmFsbGJhY2tfMTZhODM0J1wifSxcblx0XCJjbGFzc05hbWVcIjogXCJfX2NsYXNzTmFtZV8xNmE4MzRcIixcblx0XCJ2YXJpYWJsZVwiOiBcIl9fdmFyaWFibGVfMTZhODM0XCJcbn07XG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/font/local/target.css?{\"path\":\"app\\\\layout.jsx\",\"import\":\"\",\"arguments\":[{\"src\":\"../public/fonts/DarumadropOne-Regular.ttf\",\"variable\":\"--font-daruma\",\"display\":\"swap\"}],\"variableName\":\"daruma\"}\n");
+
+/***/ }),
+
 /***/ "(ssr)/./node_modules/next/dist/api/image.js":
 /*!*********************************************!*\
   !*** ./node_modules/next/dist/api/image.js ***!
