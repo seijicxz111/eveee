@@ -56,7 +56,7 @@ export default function Footer() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 rounded-full flex items-center justify-center bg-sky/10 border border-sky/25 text-deep/50 hover:text-deep hover:border-mid transition-all text-xs"
+                className="w-8 h-8 rounded-full flex items-center justify-center bg-sky/10 border border-sky/25 text-deep/50 hover:text-deep hover:border-mid transition-all text-xs sketchy-circle"
                 whileHover={{ y: -2, scale: 1.1 }}
                 whileTap={{ scale: 0.92 }}
               >

@@ -54,7 +54,7 @@ export default function Stats() {
               whileHover={{ y: -8, scale: 1.05, boxShadow: '0 20px 50px rgba(53,88,114,0.22)' }}
             >
               <motion.div
-                className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mx-auto mb-2 border border-sky/20 shadow-sm"
+                className="w-10 h-10 rounded-xl bg-white flex items-center justify-center mx-auto mb-2 icon-sq-sketchy"
                 animate={stat.spin
                   ? { rotate: 360 }
                   : { rotate: [0, -10, 10, 0] }

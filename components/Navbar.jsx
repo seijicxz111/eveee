@@ -55,7 +55,7 @@ export default function Navbar() {
         transition={{ duration: 0.7, ease: [0.34,1.56,0.64,1] }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#F7F8F0]/90 backdrop-blur-xl border-b border-[var(--mid)]/40 shadow-lg'
+            ? 'bg-[#F7F8F0]/90 backdrop-blur-xl shadow-lg navbar-sketchy-border'
             : 'bg-transparent'
         }`}
       >
@@ -70,7 +70,7 @@ export default function Navbar() {
             onHoverEnd={() => setLogoHover(false)}
           >
             <motion.div
-              className="relative w-9 h-9 rounded-2xl overflow-hidden border-2 border-[var(--mid)]/60 shadow-md bg-white"
+              className="relative w-9 h-9 rounded-2xl overflow-hidden border-2 border-[var(--mid)]/60 shadow-md bg-white sketchy-badge"
               animate={logoHovered ? { rotate: [0, -8, 8, -4, 0], scale: 1.1 } : { rotate: 0, scale: 1 }}
               transition={{ duration: 0.5, type: 'spring', stiffness: 300, damping: 15 }}
             >
@@ -171,7 +171,7 @@ export default function Navbar() {
               {/* Header row */}
               <div className="flex items-center justify-between px-5 py-4 border-b border-[var(--mid)]/25">
                 <div className="flex items-center gap-2.5">
-                  <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-[var(--mid)]/50 bg-white">
+                  <div className="relative w-8 h-8 rounded-xl overflow-hidden border border-[var(--mid)]/50 bg-white sketchy-badge">
                     <Image src="/icon.png" alt="logo" fill className="object-contain p-0.5" />
                   </div>
                   <span className="font-display font-800 text-[var(--deep)] text-base">Seijicxz</span>

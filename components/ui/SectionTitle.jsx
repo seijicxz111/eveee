@@ -27,26 +27,32 @@ export default function SectionTitle({ icon, title, sub }) {
 
       {/* Decorative line with flower */}
       <div className="flex items-center justify-center gap-3 mb-3">
-        <motion.span
-          className="h-px w-12 rounded-full"
-          style={{ background: 'rgba(156,213,255,0.6)' }}
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
+        <motion.svg
+          width="48" height="8" viewBox="0 0 48 8"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={inView ? { scaleX: 1, opacity: 1 } : {}}
           transition={{ delay: 0.18, duration: 0.5 }}
-        />
+          style={{ transformOrigin: 'right' }}
+        >
+          <path d="M2,4 C8,2.5 14,5.5 20,3.5 C26,1.5 32,5 38,4 C42,3.2 45,4.5 47,4" stroke="rgba(156,213,255,0.75)" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          <path d="M1,4.5 C7,3 13,6 19,4 C25,2 31,5.5 37,4.5 C41,3.8 44,5 46,4.5" stroke="rgba(122,170,206,0.3)" strokeWidth="1" fill="none" strokeLinecap="round" />
+        </motion.svg>
         <motion.i
           className="fas fa-seedling text-xs"
           style={{ color: '#9CD5FF' }}
           animate={inView ? { rotate: [0, 15, -10, 0], scale: [0.8, 1.2, 1] } : {}}
           transition={{ delay: 0.28, duration: 0.6 }}
         />
-        <motion.span
-          className="h-px w-12 rounded-full"
-          style={{ background: 'rgba(156,213,255,0.6)' }}
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
+        <motion.svg
+          width="48" height="8" viewBox="0 0 48 8"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={inView ? { scaleX: 1, opacity: 1 } : {}}
           transition={{ delay: 0.18, duration: 0.5 }}
-        />
+          style={{ transformOrigin: 'left' }}
+        >
+          <path d="M1,4 C4,4.8 8,3.2 14,4.5 C20,5.8 26,2.5 32,4 C38,5.5 42,3 46,4" stroke="rgba(156,213,255,0.75)" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+          <path d="M2,3.5 C5,4.5 9,2.8 15,4 C21,5.2 27,2 33,3.5 C39,5 43,3.2 47,4" stroke="rgba(122,170,206,0.3)" strokeWidth="1" fill="none" strokeLinecap="round" />
+        </motion.svg>
       </div>
 
       {sub && (

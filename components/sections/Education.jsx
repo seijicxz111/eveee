@@ -86,7 +86,7 @@ function TimelineItem({ item, index }) {
       >
         <div className="flex items-start gap-3 mb-3">
           <motion.div
-            className="w-10 h-10 rounded-xl bg-white border border-sky/20 flex items-center justify-center flex-shrink-0 shadow-sm"
+            className="w-10 h-10 rounded-xl bg-white border border-sky/20 flex items-center justify-center flex-shrink-0 shadow-sm icon-sq"
             whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
             transition={{ duration: 0.4 }}
           >
@@ -141,7 +141,7 @@ export default function Education() {
               className="font-display font-800 text-deep text-lg mb-6 flex items-center gap-2"
             >
               <motion.div
-                className="w-8 h-8 rounded-xl bg-sky/20 flex items-center justify-center"
+                className="w-8 h-8 rounded-xl bg-sky/20 flex items-center justify-center icon-sq"
                 whileHover={{ rotate: 10, scale: 1.1 }}
               >
                 <i className="fas fa-school text-mid text-sm" />
@@ -167,7 +167,7 @@ export default function Education() {
               className="font-display font-800 text-deep text-lg mb-6 flex items-center gap-2"
             >
               <motion.div
-                className="w-8 h-8 rounded-xl bg-leaf/30 flex items-center justify-center"
+                className="w-8 h-8 rounded-xl bg-leaf/30 flex items-center justify-center icon-sq"
                 whileHover={{ rotate: 10, scale: 1.1 }}
               >
                 <i className="fas fa-certificate text-emerald-500 text-sm" />

@@ -81,15 +81,15 @@ function SkillCard({ name, icon, color, delay = 0 }) {
       initial={{ opacity: 0, y: 30, scale: 0.85 }}
       animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
       transition={{ delay, type: 'spring', stiffness: 260, damping: 22 }}
-      className="flex items-center gap-3 px-4 py-3 rounded-2xl border cursor-default"
-      style={{ background: 'rgba(255,255,255,0.78)', borderColor: 'rgba(156,213,255,0.4)', boxShadow: '0 2px 12px rgba(53,88,114,0.08)' }}
+      className="skill-card-sketchy flex items-center gap-3 px-4 py-3 rounded-2xl cursor-default"
+      style={{ background: 'rgba(255,255,255,0.78)' }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       whileHover={{ y: -5, boxShadow: '0 12px 32px rgba(53,88,114,0.18)' }}
     >
       <motion.div
-        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-        style={{ background: `${color}18`, border: `1.5px solid ${color}40` }}
+        className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 icon-sq-sketchy"
+        style={{ background: `${color}18` }}
         whileHover={{ scale: 1.2, rotate: 12 }}
         transition={{ type: 'spring', stiffness: 400, damping: 14 }}
       >
@@ -164,10 +164,10 @@ export default function Skills() {
               onClick={() => setActive(i)}
               variants={tabVariants}
               animate={active === i ? 'active' : 'inactive'}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full font-body font-800 text-sm transition-all duration-200 border-2"
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-body font-800 text-sm transition-all duration-200 ${active === i ? 'tab-btn-sketchy-active' : 'tab-btn-sketchy'}`}
               style={active === i
-                ? { background: '#355872', color: 'white', borderColor: '#355872', boxShadow: '0 4px 16px rgba(53,88,114,0.35)' }
-                : { background: 'rgba(255,255,255,0.75)', color: 'rgba(53,88,114,0.6)', borderColor: 'rgba(156,213,255,0.4)' }
+                ? { background: '#355872', color: 'white' }
+                : { background: 'rgba(255,255,255,0.75)', color: 'rgba(53,88,114,0.6)' }
               }
               whileHover={{ scale: 1.06, y: -2 }}
               whileTap={{ scale: 0.94 }}
@@ -199,8 +199,8 @@ export default function Skills() {
               transition={{ delay: 0.1 }}
             >
               <motion.div
-                className="w-10 h-10 rounded-xl flex items-center justify-center border"
-                style={{ background: 'rgba(156,213,255,0.2)', borderColor: 'rgba(156,213,255,0.4)' }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center icon-sq-sketchy"
+                style={{ background: 'rgba(156,213,255,0.2)' }}
                 animate={{ rotate: [0, -8, 8, 0], scale: [1, 1.08, 1] }}
                 transition={{ duration: 0.55, delay: 0.1 }}
               >

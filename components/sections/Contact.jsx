@@ -85,7 +85,7 @@ export default function Contact() {
                   whileHover={{ x: 4, borderColor: s.color }}
                 >
                   <motion.div
-                    className="w-10 h-10 rounded-xl bg-sky/15 border border-sky/25 flex items-center justify-center flex-shrink-0"
+                    className="w-10 h-10 rounded-xl bg-sky/15 border border-sky/25 flex items-center justify-center flex-shrink-0 icon-sq"
                     whileHover={{ scale: 1.1, backgroundColor: `${s.color}22` }}
                   >
                     <i className={`${s.icon} text-sm`} style={{ color: s.color }} />

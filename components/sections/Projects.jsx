@@ -30,7 +30,7 @@ function RepoCard({ repo, index }) {
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-sky/15 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-sky/15 flex items-center justify-center icon-sq">
             <i className="fab fa-github text-deep/60 text-sm" />
           </div>
           <h3 className="font-display font-700 text-deep text-sm leading-tight line-clamp-1">

@@ -6,7 +6,6 @@ import {
   useMotionValue, useSpring, useTransform,
   AnimatePresence,
   useScroll,
-  useAnimationFrame,
 } from 'framer-motion';
 import Image from 'next/image';
 
@@ -111,44 +110,67 @@ function AnimatedName({ text, className, delay = 0, gradient = false }) {
   );
 }
 
-// Orbiting ring that spins around the profile
-function OrbitRing({ radius, duration, delay, dotColor }) {
-  const angle = useMotionValue(delay * 60);
-  useAnimationFrame((_, delta) => {
-    angle.set(angle.get() + (delta / 1000) * (360 / duration));
-  });
-  const x = useTransform(angle, (a) => Math.cos((a * Math.PI) / 180) * radius);
-  const y = useTransform(angle, (a) => Math.sin((a * Math.PI) / 180) * radius);
-
+// Hand-drawn SVG blob shape for the profile frame
+function HandDrawnProfileFrame({ size = 280 }) {
+  // A wobbly, hand-sketched circle path using SVG
+  // The path traces a rough circle with slight irregularities to look drawn
+  const s = size;
+  const c = s / 2;
+  const r = c - 6;
   return (
-    <>
-      {/* The ring itself */}
-      <div
-        className="absolute rounded-full border border-dashed pointer-events-none"
-        style={{
-          width: radius * 2,
-          height: radius * 2,
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          borderColor: 'rgba(156,213,255,0.25)',
-        }}
+    <svg
+      width={s}
+      height={s}
+      viewBox={`0 0 ${s} ${s}`}
+      style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2 }}
+      fill="none"
+    >
+      <defs>
+        <clipPath id="sketchy-clip">
+          <path d={`
+            M ${c}, ${c - r + 4}
+            C ${c + r*0.35}, ${c - r - 2}, ${c + r + 3}, ${c - r*0.4}, ${c + r - 2}, ${c + 2}
+            C ${c + r + 4}, ${c + r*0.45}, ${c + r*0.3}, ${c + r + 3}, ${c - 2}, ${c + r - 3}
+            C ${c - r*0.4}, ${c + r + 5}, ${c - r - 3}, ${c + r*0.35}, ${c - r + 3}, ${c - 1}
+            C ${c - r - 2}, ${c - r*0.4}, ${c - r*0.3}, ${c - r + 1}, ${c}, ${c - r + 4}
+            Z
+          `} />
+        </clipPath>
+      </defs>
+      {/* Outer sketchy stroke - slightly offset, double line feel */}
+      <path
+        d={`
+          M ${c}, ${c - r + 4}
+          C ${c + r*0.35}, ${c - r - 2}, ${c + r + 3}, ${c - r*0.4}, ${c + r - 2}, ${c + 2}
+          C ${c + r + 4}, ${c + r*0.45}, ${c + r*0.3}, ${c + r + 3}, ${c - 2}, ${c + r - 3}
+          C ${c - r*0.4}, ${c + r + 5}, ${c - r - 3}, ${c + r*0.35}, ${c - r + 3}, ${c - 1}
+          C ${c - r - 2}, ${c - r*0.4}, ${c - r*0.3}, ${c - r + 1}, ${c}, ${c - r + 4}
+          Z
+        `}
+        stroke="rgba(122,170,206,0.85)"
+        strokeWidth="3.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+        style={{ filter: 'url(#sketchy-filter)' }}
       />
-      {/* The orbiting dot */}
-      <motion.div
-        className="absolute w-3 h-3 rounded-full pointer-events-none"
-        style={{
-          top: '50%',
-          left: '50%',
-          x,
-          y,
-          marginLeft: -6,
-          marginTop: -6,
-          background: dotColor,
-          boxShadow: `0 0 10px ${dotColor}`,
-        }}
+      {/* Inner slightly offset stroke for double-line hand-drawn feel */}
+      <path
+        d={`
+          M ${c + 1}, ${c - r + 7}
+          C ${c + r*0.33}, ${c - r + 1}, ${c + r}, ${c - r*0.38}, ${c + r - 5}, ${c + 3}
+          C ${c + r + 1}, ${c + r*0.42}, ${c + r*0.28}, ${c + r}, ${c - 3}, ${c + r - 6}
+          C ${c - r*0.38}, ${c + r + 2}, ${c - r}, ${c + r*0.3}, ${c - r + 6}, ${c - 2}
+          C ${c - r + 1}, ${c - r*0.38}, ${c - r*0.28}, ${c - r + 3}, ${c + 1}, ${c - r + 7}
+          Z
+        `}
+        stroke="rgba(156,213,255,0.5)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
       />
-    </>
+    </svg>
   );
 }
 
@@ -196,6 +218,8 @@ export default function Hero() {
     { label: 'Figma',   icon: 'fab fa-figma',  color: '#b0c8d8', x: '-left-6',  y: 'bottom-16', d: 1   },
   ];
 
+  const PFP_SIZE = 280;
+
   return (
     <motion.section
       id="about"
@@ -219,7 +243,6 @@ export default function Hero() {
 
           {/* ── Text side ── */}
           <motion.div variants={container} initial="hidden" animate="show" className="order-2 md:order-1">
-
 
             {/* Name with letter-by-letter reveal */}
             <motion.h1
@@ -297,12 +320,12 @@ export default function Hero() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="w-11 h-11 rounded-full flex items-center justify-center bg-white/80 border-2 transition-all duration-200"
-                  style={{ borderColor: 'rgba(156,213,255,0.5)', color: 'rgba(53,88,114,0.6)' }}
+                  className="w-11 h-11 sketchy-circle flex items-center justify-center bg-white/80 transition-all duration-200"
+                  style={{ color: 'rgba(53,88,114,0.6)' }}
                   initial={{ opacity: 0, scale: 0, rotate: -45 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0 }}
                   transition={{ delay: 1.4 + i * 0.12, type: 'spring', stiffness: 340, damping: 18 }}
-                  whileHover={{ y: -6, scale: 1.18, rotate: 8, borderColor: '#7AAACE', color: '#355872' }}
+                  whileHover={{ y: -6, scale: 1.18, rotate: 8, color: '#355872' }}
                   whileTap={{ scale: 0.88 }}
                 >
                   <i className={s.icon} />
@@ -335,30 +358,18 @@ export default function Hero() {
             className="order-1 md:order-2 flex items-center justify-center"
           >
             <MagneticProfile>
-              <div className="relative" style={{ width: 280, height: 280 }}>
+              <div className="relative" style={{ width: PFP_SIZE, height: PFP_SIZE }}>
 
-                {/* Orbiting rings */}
-                <OrbitRing radius={160} duration={12} delay={0}   dotColor="rgba(156,213,255,0.9)" />
-                <OrbitRing radius={190} duration={18} delay={0.5} dotColor="rgba(122,170,206,0.7)" />
+                {/* Hand-drawn border frame (replaces rings) */}
+                <HandDrawnProfileFrame size={PFP_SIZE} />
 
-                {/* Static glow rings */}
-                {['-inset-5', '-inset-10', '-inset-16'].map((inset, i) => (
-                  <motion.div
-                    key={i}
-                    className={`absolute ${inset} rounded-full border border-[#9CD5FF]`}
-                    style={{ opacity: 0.22 - i * 0.06 }}
-                    animate={{
-                      scale: [1, 1.05 + i * 0.02, 1],
-                      opacity: [0.22 - i * 0.06, 0.06, 0.22 - i * 0.06],
-                    }}
-                    transition={{ duration: 3.5 + i * 0.6, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }}
-                  />
-                ))}
-
-                {/* Profile photo */}
+                {/* Profile photo — clipped to the same sketchy shape */}
                 <motion.div
-                  className="absolute inset-0 rounded-full overflow-hidden border-4 shadow-2xl"
-                  style={{ borderColor: 'rgba(156,213,255,0.6)', background: '#F7F8F0' }}
+                  className="absolute inset-0 overflow-hidden"
+                  style={{
+                    clipPath: `path('M ${PFP_SIZE/2}, ${PFP_SIZE/2 - PFP_SIZE/2 + 10} C ${PFP_SIZE/2 + PFP_SIZE*0.175}, ${PFP_SIZE/2 - PFP_SIZE/2 - 4}, ${PFP_SIZE/2 + PFP_SIZE/2 + 5}, ${PFP_SIZE/2 - PFP_SIZE*0.2}, ${PFP_SIZE/2 + PFP_SIZE/2 - 6}, ${PFP_SIZE/2 + 6} C ${PFP_SIZE/2 + PFP_SIZE/2 + 7}, ${PFP_SIZE/2 + PFP_SIZE*0.225}, ${PFP_SIZE/2 + PFP_SIZE*0.15}, ${PFP_SIZE/2 + PFP_SIZE/2 + 5}, ${PFP_SIZE/2 - 4}, ${PFP_SIZE/2 + PFP_SIZE/2 - 7} C ${PFP_SIZE/2 - PFP_SIZE*0.2}, ${PFP_SIZE/2 + PFP_SIZE/2 + 7}, ${PFP_SIZE/2 - PFP_SIZE/2 - 5}, ${PFP_SIZE/2 + PFP_SIZE*0.175}, ${PFP_SIZE/2 - PFP_SIZE/2 + 7}, ${PFP_SIZE/2 - 3} C ${PFP_SIZE/2 - PFP_SIZE/2 - 4}, ${PFP_SIZE/2 - PFP_SIZE*0.2}, ${PFP_SIZE/2 - PFP_SIZE*0.15}, ${PFP_SIZE/2 - PFP_SIZE/2 + 5}, ${PFP_SIZE/2}, ${PFP_SIZE/2 - PFP_SIZE/2 + 10} Z')`,
+                    background: '#F7F8F0',
+                  }}
                   animate={{ y: [0, -12, 0] }}
                   transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
                   whileHover={{ scale: 1.04 }}
@@ -367,7 +378,7 @@ export default function Hero() {
 
                   {/* Shimmer overlay */}
                   <motion.div
-                    className="absolute inset-0 rounded-full"
+                    className="absolute inset-0"
                     style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.28) 0%, transparent 60%)' }}
                     animate={{ opacity: [0.3, 0.9, 0.3] }}
                     transition={{ duration: 2.8, repeat: Infinity }}
@@ -376,8 +387,7 @@ export default function Hero() {
 
                 {/* Mascot badge */}
                 <motion.div
-                  className="absolute -bottom-5 -right-5 bg-white/90 rounded-2xl p-2 border-2 shadow-lg"
-                  style={{ borderColor: 'rgba(156,213,255,0.5)' }}
+                  className="absolute -bottom-5 -right-5 bg-white/90 sketchy-badge p-2 shadow-lg"
                   initial={{ opacity: 0, scale: 0, rotate: -20 }}
                   animate={{ opacity: 1, scale: 1, rotate: 0, y: [0, -6, 0] }}
                   transition={{
@@ -397,8 +407,7 @@ export default function Hero() {
                 {SKILL_BADGES.map((b, i) => (
                   <motion.div
                     key={b.label}
-                    className={`absolute ${b.x} ${b.y} bg-white/90 rounded-2xl px-3 py-1.5 flex items-center gap-2 shadow-lg border`}
-                    style={{ borderColor: 'rgba(156,213,255,0.4)' }}
+                    className={`absolute ${b.x} ${b.y} bg-white/90 sketchy-pill px-3 py-1.5 flex items-center gap-2 shadow-lg`}
                     initial={{ opacity: 0, scale: 0, x: i % 2 === 0 ? -30 : 30 }}
                     animate={{ opacity: 1, scale: 1, x: 0, y: [0, -8, 0] }}
                     transition={{
