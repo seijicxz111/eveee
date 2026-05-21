@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Seijicxz Portfolio — Chiikawa Theme 🐾
 
 A fully redesigned portfolio built with **Next.js 14**, **Tailwind CSS**, **Framer Motion**, and **Three.js**, featuring a soft Chiikawa-inspired aesthetic using a custom blue palette.
@@ -178,3 +179,7 @@ To increase/decrease performance, adjust `starCount` and the sphere count (`28`)
 ---
 
 Made with 💙 by Seijicxz
+=======
+# seijicxz_portfolio
+my space in the internet
+>>>>>>> 33e8a2d5e0bad85f9b7c2c86a825f8d46a807ff4
