@@ -19,18 +19,33 @@ export default function Navbar() {
   const [logoHovered,   setLogoHover]  = useState(false);
 
   useEffect(() => {
+    // Cache offsetTop values once and refresh on resize — reading offsetTop inside
+    // a scroll handler forces layout recalculation (reflow) on every scroll event.
+    const sections = NAV_LINKS.map(l => l.href.slice(1));
+    let offsets = {};
+
+    const cacheOffsets = () => {
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) offsets[id] = el.offsetTop;
+      });
+    };
+    cacheOffsets();
+    window.addEventListener('resize', cacheOffsets, { passive: true });
+
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
-      const sections = NAV_LINKS.map(l => l.href.slice(1));
       let current = 'about';
       for (const id of sections) {
-        const el = document.getElementById(id);
-        if (el && window.scrollY >= el.offsetTop - 120) current = id;
+        if (window.scrollY >= (offsets[id] ?? 0) - 120) current = id;
       }
       setActive(current);
     };
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', cacheOffsets);
+    };
   }, []);
 
   useEffect(() => {
@@ -244,12 +259,8 @@ export default function Navbar() {
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: i * 0.055, type: 'spring', stiffness: 320, damping: 24 }}
                       onClick={() => handleNavClick(link.href)}
-                      className="text-left px-5 py-3.5 font-body font-700 text-base transition-all duration-200 sketchy-pill"
+                      className="w-full text-left px-5 py-3.5 font-body font-700 text-base transition-all duration-200 sketchy-pill"
                       style={{
-                        width: '100%',
-                        maxWidth: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
                         borderRadius: '999px',
                         color: isActive ? 'var(--deep)' : 'rgba(53,88,114,0.55)',
                         background: isActive ? 'rgba(156,213,255,0.22)' : 'rgba(255,255,255,0.6)',
@@ -267,7 +278,7 @@ export default function Navbar() {
                       {isActive && (
                         <motion.span
                           layoutId="mobile-nav-indicator"
-                          style={{ marginLeft: "auto" }} className="text-[var(--mid)] text-xs"
+                          className="float-right text-[var(--mid)] text-xs"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >✦</motion.span>

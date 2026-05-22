@@ -6,6 +6,10 @@ export default function ThreeCanvas() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    // Skip Three.js entirely on mobile — saves ~500KB JS + eliminates
+    // the main-thread animation loop that causes "Minimize main-thread work"
+    if (window.innerWidth < 768) return;
+
     let animId;
     let THREE;
 
@@ -13,19 +17,22 @@ export default function ThreeCanvas() {
       THREE = (await import('three')).default || await import('three');
 
       const canvas = canvasRef.current;
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      if (!canvas) return;
+
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false });
+      // Cap pixel ratio at 1.5 on desktop to reduce GPU fill cost
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
       renderer.setSize(window.innerWidth, window.innerHeight);
 
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 200);
       camera.position.set(0, 0, 40);
 
-      // ── Floating spheres (bubbles) ──
-      const bubbleGeo = new THREE.SphereGeometry(1, 16, 16);
+      // Reduced from 28 → 14 bubbles; lower-poly geometry (8,8) → saves geometry memory
+      const bubbleGeo = new THREE.SphereGeometry(1, 8, 8);
       const bubbles = [];
       const bubbleColors = [0x9CD5FF, 0x7AAACE, 0xC8EFD4, 0xFFD6E0, 0xF9C5D1];
-      for (let i = 0; i < 28; i++) {
+      for (let i = 0; i < 14; i++) {
         const mat = new THREE.MeshPhongMaterial({
           color: bubbleColors[Math.floor(Math.random() * bubbleColors.length)],
           transparent: true,
@@ -50,9 +57,9 @@ export default function ThreeCanvas() {
         bubbles.push(mesh);
       }
 
-      // ── Star particles ──
+      // Reduced stars 120 → 60
       const starGeo = new THREE.BufferGeometry();
-      const starCount = 120;
+      const starCount = 60;
       const positions = new Float32Array(starCount * 3);
       for (let i = 0; i < starCount * 3; i++) {
         positions[i] = (Math.random() - 0.5) * 120;
@@ -67,7 +74,6 @@ export default function ThreeCanvas() {
       const stars = new THREE.Points(starGeo, starMat);
       scene.add(stars);
 
-      // ── Lights ──
       scene.add(new THREE.AmbientLight(0xffffff, 0.9));
       const dirLight = new THREE.DirectionalLight(0x9CD5FF, 0.8);
       dirLight.position.set(10, 20, 10);
@@ -85,8 +91,6 @@ export default function ThreeCanvas() {
           b.position.x += Math.cos(t * 0.7 + b.userData.phase) * 0.003;
           b.rotation.x += 0.003;
           b.rotation.y += 0.004;
-
-          // wrap around
           if (b.position.y > 30) b.position.y = -30;
           if (b.position.x > 45) b.position.x = -45;
         });
@@ -107,7 +111,7 @@ export default function ThreeCanvas() {
     const cleanup = init();
     return () => {
       cancelAnimationFrame(animId);
-      cleanup.then((fn) => fn?.());
+      cleanup?.then?.((fn) => fn?.());
     };
   }, []);
 

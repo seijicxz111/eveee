@@ -93,8 +93,8 @@ function AnimatedName({ text, className, delay = 0, gradient = false }) {
         <motion.span
           key={i}
           style={{ display: 'inline-block' }}
-          initial={{ opacity: 0, y: 50, rotateX: -90, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, rotateX: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 50, rotateX: -90 }}
+          animate={{ opacity: 1, y: 0, rotateX: 0 }}
           transition={{
             delay: delay + i * 0.05,
             type: 'spring',
@@ -176,22 +176,14 @@ export default function Hero() {
     show: { transition: { staggerChildren: 0.13, delayChildren: 0.3 } },
   };
   const item = {
-    hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
-    show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { type: 'spring', stiffness: 240, damping: 22 } },
+    hidden: { opacity: 0, y: 40 },
+    show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 240, damping: 22 } },
   };
 
-  const NextJsIcon = () => (
-    <svg width="12" height="12" viewBox="0 0 128 128" style={{ marginRight: 6, display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }} aria-hidden="true">
-      <circle cx="64" cy="64" r="64" fill="#355872"/>
-      <path d="M106.3 110.4L49.2 38H38v51.9h8.5V49.2l52.5 66.6c2.6-1.7 5-3.6 7.3-5.4z" fill="#fff"/>
-      <rect x="81" y="38" width="8.5" height="52" fill="#fff"/>
-    </svg>
-  );
-
   const SKILL_BADGES = [
-    { label: 'React',   icon: 'fab fa-react',  color: '#61DBFB', pos: { top: '30%',    left: '8px'  }, d: 0,   customIcon: null       },
-    { label: 'Next.js', icon: null,             color: '#355872', pos: { top: '22%',    right: '8px' }, d: 0.5, customIcon: NextJsIcon },
-    { label: 'Figma',   icon: 'fab fa-figma',  color: '#b0c8d8', pos: { bottom: '30%', left: '8px'  }, d: 1,   customIcon: null       },
+    { label: 'React',   icon: 'fab fa-react',  color: '#61DBFB', pos: { top: '30%',    left: '8px'  }, d: 0   },
+    { label: 'Next.js', icon: 'fas fa-code',   color: '#355872', pos: { top: '22%',    right: '8px' }, d: 0.5 },
+    { label: 'Figma',   icon: 'fab fa-figma',  color: '#b0c8d8', pos: { bottom: '30%', left: '8px'  }, d: 1   },
   ];
 
   const PFP_W = 220;
@@ -203,8 +195,10 @@ export default function Hero() {
       className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden"
       
     >
-      {/* Floating decorations */}
-      {DECOS.map((d, i) => <FloatingDeco key={i} {...d} />)}
+      {/* Floating decorations — hidden on mobile via CSS to reduce animated elements */}
+      <div className="hidden md:contents">
+        {DECOS.map((d, i) => <FloatingDeco key={i} {...d} />)}
+      </div>
 
       {/* Section-level soft glow behind content */}
       <motion.div
@@ -352,7 +346,7 @@ export default function Hero() {
                     }}
                     whileHover={{ scale: 1.14, y: -6, boxShadow: '0 10px 30px rgba(53,88,114,0.2)' }}
                   >
-                    {b.customIcon ? <b.customIcon /> : <i className={`${b.icon} text-xs`} style={{ color: b.color, marginRight: '6px' }} />}
+                    <i className={`${b.icon} text-xs`} style={{ color: b.color, marginRight: '6px' }} />
                     <span className="text-xs font-body font-800" style={{ color: '#355872' }}>{b.label}</span>
                   </motion.div>
                 </div>
@@ -375,7 +369,7 @@ export default function Hero() {
                     transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
                     whileHover={{ scale: 1.04 }}
                   >
-                    <Image src="/pfp.png" alt="CJ Steeve Cadenas" fill className="object-cover" />
+                    <Image src="/pfp.png" alt="CJ Steeve Cadenas" fill priority sizes="220px" className="object-cover" />
                     <motion.div
                       className="absolute inset-0"
                       style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.28) 0%, transparent 60%)' }}

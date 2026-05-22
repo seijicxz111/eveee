@@ -668,6 +668,9 @@ video {
 .order-2 {
   order: 2;
 }
+.float-right {
+  float: right;
+}
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -1494,6 +1497,16 @@ body {
   background-size: 30px 30px;
 }
 
+/* ── Reduce motion: pause all decorative animations ── */
+@media (prefers-reduced-motion: reduce) {
+  .bg-orb, .bg-dots { animation: none !important; }
+}
+
+/* ── Mobile: pause expensive background orb animations to cut main-thread work ── */
+@media (max-width: 767px) {
+  .bg-orb { animation-play-state: paused !important; }
+}
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #d8eaf5; }
@@ -1897,6 +1910,7 @@ body {
     0 3px 0 0 rgba(122,170,206,0.10),
     0 4px 0 0 rgba(156,213,255,0.06),
     0 16px 40px rgba(53,88,114,0.09) !important;
+  position: relative;
 }
 /* Second "pass" line on navbar */
 .navbar-sketchy-border::after {
@@ -2249,6 +2263,10 @@ footer::before {
 
   .md\:flex {
     display: flex;
+  }
+
+  .md\:contents {
+    display: contents;
   }
 
   .md\:hidden {
