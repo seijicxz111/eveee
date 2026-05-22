@@ -691,9 +691,6 @@ video {
 .order-2 {
   order: 2;
 }
-.float-right {
-  float: right;
-}
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -1933,7 +1930,7 @@ body {
     0 3px 0 0 rgba(122,170,206,0.10),
     0 4px 0 0 rgba(156,213,255,0.06),
     0 16px 40px rgba(53,88,114,0.09) !important;
-  position: relative;
+
 }
 /* Second "pass" line on navbar */
 .navbar-sketchy-border::after {

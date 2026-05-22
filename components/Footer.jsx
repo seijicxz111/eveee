@@ -1,6 +1,73 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
+import { useState, useEffect } from 'react';
+
+// Floating hearts that pop up and drift away
+function FloatingHeart() {
+  const [hearts, setHearts] = useState([]);
+
+  useEffect(() => {
+    let id = 0;
+    const spawn = () => {
+      const key = id++;
+      setHearts(h => [...h, {
+        key,
+        x: (Math.random() - 0.5) * 40, // drift left/right
+        delay: 0,
+        size: 10 + Math.random() * 8,
+      }]);
+      // remove after animation completes
+      setTimeout(() => setHearts(h => h.filter(p => p.key !== key)), 1800);
+    };
+    spawn(); // one on mount
+    const iv = setInterval(spawn, 900);
+    return () => clearInterval(iv);
+  }, []);
+
+  return (
+    <span className="relative inline-block ml-1" style={{ width: 22, height: 22, verticalAlign: 'middle' }}>
+      {/* Base jumping icon */}
+      <motion.span
+        className="inline-block"
+        animate={{
+          y:        [0, -10, 0, -5, 0],
+          scaleX:   [1, 0.85, 1.1, 0.95, 1],
+          scaleY:   [1, 1.15, 0.9, 1.05, 1],
+          rotate:   [0, -6, 4, -2, 0],
+        }}
+        transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.4 }}
+        style={{ transformOrigin: 'bottom center' }}
+      >
+        <Image src="/footer_heart.png" alt="heart" width={24} height={24} className="object-contain" />
+      </motion.span>
+
+      {/* Floating particles */}
+      <AnimatePresence>
+        {hearts.map(h => (
+          <motion.span
+            key={h.key}
+            style={{
+              position: 'absolute',
+              bottom: 0,
+              left: '50%',
+              pointerEvents: 'none',
+              width: h.size,
+              height: h.size,
+            }}
+            initial={{ opacity: 0.9, y: 0, x: h.x * 0.3, scale: 0.7 }}
+            animate={{ opacity: 0, y: -36, x: h.x, scale: 1.1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.6, ease: 'easeOut' }}
+          >
+            <Image src="/hearts.png" alt="" width={Math.round(h.size)} height={Math.round(h.size)} className="object-contain" />
+          </motion.span>
+        ))}
+      </AnimatePresence>
+    </span>
+  );
+}
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -17,16 +84,8 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-5 py-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            {/* Mini chiikawa */}
-            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
-              <circle cx="18" cy="18" r="15" fill="#F7F8F0" stroke="#9CD5FF" strokeWidth="1.5"/>
-              <ellipse cx="10" cy="8" rx="4" ry="5" fill="#F7F8F0" stroke="#9CD5FF" strokeWidth="1.2"/>
-              <ellipse cx="26" cy="8" rx="4" ry="5" fill="#F7F8F0" stroke="#9CD5FF" strokeWidth="1.2"/>
-              <circle cx="14" cy="19" r="2" fill="#355872"/>
-              <circle cx="22" cy="19" r="2" fill="#355872"/>
-              <ellipse cx="11.5" cy="22" rx="2" ry="1" fill="#F9C5D1" opacity="0.7"/>
-              <ellipse cx="24.5" cy="22" rx="2" ry="1" fill="#F9C5D1" opacity="0.7"/>
-            </svg>
+            {/* Footer icon */}
+            <Image src="/footer_icon.png" alt="footer icon" width={28} height={28} className="object-contain" />
             <span className="font-display font-700 text-deep text-sm">
               Seijicxz
             </span>
@@ -37,13 +96,7 @@ export default function Footer() {
             <span className="text-mid font-700">Next.js</span> +{' '}
             <span className="text-mid font-700">Tailwind</span> +{' '}
             <span className="text-mid font-700">Framer Motion</span>
-            <motion.span
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="inline-block ml-1"
-            >
-              💙
-            </motion.span>
+            <FloatingHeart />
           </p>
 
           <div className="flex items-center gap-2">

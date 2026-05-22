@@ -17,6 +17,11 @@ const spaceMono = Space_Mono({
 export const metadata = {
   title: 'eeve',
   description: 'CJ Steeve Cadenas — Web Developer & UI Designer.',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 }
 
 export default function RootLayout({ children }) {

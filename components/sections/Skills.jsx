@@ -18,26 +18,31 @@ const SKILL_GROUPS = [
       { name: 'React.js',     icon: 'fab fa-react',      color: '#3d8fa8' },
       { name: 'Tailwind CSS', icon: 'fas fa-wind',       color: '#3b88a0' },
       { name: 'Next.js',      icon: 'fas fa-code',       color: '#355872' },
+      { name: 'GDScript / Godot', imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg', color: '#4a8fcb' },
     ],
   },
   {
     label: 'Backend',
     icon: 'fas fa-server',
     skills: [
-      { name: 'Node.js',    icon: 'fab fa-node-js',  color: '#3d7a3e' },
-      { name: 'Python',     icon: 'fab fa-python',   color: '#3b6a9c' },
-      { name: 'Express.js', icon: 'fas fa-server',   color: '#7AAACE' },
-      { name: 'MySQL',      icon: 'fas fa-database', color: '#2a7a8f' },
+      { name: 'Node.js',      icon: 'fab fa-node-js',  color: '#3d7a3e' },
+      { name: 'Python',       icon: 'fab fa-python',   color: '#3b6a9c' },
+      { name: 'Express.js',   icon: 'fas fa-server',   color: '#7AAACE' },
+      { name: 'MySQL',        icon: 'fas fa-database', color: '#2a7a8f' },
+      { name: 'PostgreSQL',   imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg', color: '#3b6a9c' },
+      { name: 'Flutter',      imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg',      color: '#3dcef5' },
     ],
   },
   {
     label: 'Tools',
     icon: 'fas fa-tools',
     skills: [
-      { name: 'Git & GitHub', icon: 'fab fa-github', color: '#355872' },
-      { name: 'Figma',        icon: 'fab fa-figma',  color: '#8a6eb8' },
-      { name: 'VS Code',      icon: 'fas fa-code',   color: '#2a6aad' },
-      { name: 'Linux (WSL)',  icon: 'fab fa-linux',  color: '#c8961a' },
+      { name: 'Git & GitHub', icon: 'fab fa-github',  color: '#355872' },
+      { name: 'Figma',        icon: 'fab fa-figma',   color: '#8a6eb8' },
+      { name: 'VS Code',      icon: 'fas fa-code',    color: '#2a6aad' },
+      { name: 'Linux (WSL)',  icon: 'fab fa-linux',   color: '#c8961a' },
+      { name: 'JetBrains',    imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jetbrains/jetbrains-original.svg', color: '#e84393' },
+      { name: 'Vite',         imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg',      color: '#9c6aff' },
     ],
   },
 ];
@@ -54,11 +59,16 @@ const ALL_TECH = [
   { name: 'Git',        icon: 'fab fa-github',    color: '#355872' },
   { name: 'Figma',      icon: 'fab fa-figma',     color: '#8a6eb8' },
   { name: 'MySQL',      icon: 'fas fa-database',  color: '#2a7a8f' },
-  { name: 'VS Code',    icon: 'fas fa-code',      color: '#2a6aad' },
+  { name: 'VS Code',      icon: 'fas fa-code',      color: '#2a6aad' },
+  { name: 'Vite',         imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vitejs/vitejs-original.svg',      color: '#9c6aff' },
+  { name: 'Flutter',      imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg',   color: '#3dcef5' },
+  { name: 'PostgreSQL',   imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg', color: '#3b6a9c' },
+  { name: 'Godot',        imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg',       color: '#4a8fcb' },
+  { name: 'JetBrains',    imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jetbrains/jetbrains-original.svg', color: '#e84393' },
 ];
 
 // 3D tilt card for each skill
-function SkillCard({ name, icon, color, delay = 0 }) {
+function SkillCard({ name, icon, imgSrc, color, delay = 0 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: '-40px' });
   const x = useMotionValue(0);
@@ -93,7 +103,10 @@ function SkillCard({ name, icon, color, delay = 0 }) {
         whileHover={{ scale: 1.2, rotate: 12 }}
         transition={{ type: 'spring', stiffness: 400, damping: 14 }}
       >
-        <i className={`${icon} text-sm`} style={{ color }} />
+        {imgSrc
+          ? <img src={imgSrc} alt={name} style={{ width: 18, height: 18, objectFit: 'contain' }} />
+          : <i className={`${icon} text-sm`} style={{ color }} />
+        }
       </motion.div>
       <span className="text-sm font-body font-700" style={{ color: '#355872' }}>{name}</span>
     </motion.div>

@@ -185,7 +185,9 @@ export default function Projects() {
           </div>
         ) : error ? (
           <div className="text-center py-16">
-            <span className="text-5xl mb-4 block">😿</span>
+            <div className="w-20 h-20 mx-auto mb-4 relative">
+              <img src="/error.png" alt="error" className="w-full h-full object-contain" />
+            </div>
             <p className="text-deep/45 font-body">{error}</p>
             <a
               href="https://github.com/seijicxz"

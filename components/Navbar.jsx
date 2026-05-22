@@ -259,8 +259,12 @@ export default function Navbar() {
                       animate={{ x: 0, opacity: 1 }}
                       transition={{ delay: i * 0.055, type: 'spring', stiffness: 320, damping: 24 }}
                       onClick={() => handleNavClick(link.href)}
-                      className="w-full text-left px-5 py-3.5 font-body font-700 text-base transition-all duration-200 sketchy-pill"
+                      className="text-left px-5 py-3.5 font-body font-700 text-base transition-all duration-200 sketchy-pill"
                       style={{
+                        width: '100%',
+                        maxWidth: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
                         borderRadius: '999px',
                         color: isActive ? 'var(--deep)' : 'rgba(53,88,114,0.55)',
                         background: isActive ? 'rgba(156,213,255,0.22)' : 'rgba(255,255,255,0.6)',
@@ -278,7 +282,7 @@ export default function Navbar() {
                       {isActive && (
                         <motion.span
                           layoutId="mobile-nav-indicator"
-                          className="float-right text-[var(--mid)] text-xs"
+                          style={{ marginLeft: 'auto' }} className="text-[var(--mid)] text-xs"
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                         >✦</motion.span>
