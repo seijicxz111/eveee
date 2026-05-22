@@ -249,9 +249,10 @@ body {
 .timeline-line {
   position: absolute;
   left: 18px; top: 0; bottom: 0;
-  width: 2px;
+  width: 2.5px;
   background: linear-gradient(to bottom, var(--sky), var(--mid), transparent);
   border-radius: 2px;
+  filter: url(#rough-pill);
 }
 .timeline-dot {
   width: 14px; height: 14px;
@@ -260,6 +261,7 @@ body {
   border: 2.5px solid white;
   box-shadow: 0 0 10px rgba(156,213,255,0.55);
   flex-shrink: 0;
+  filter: url(#rough-sketch);
 }
 
 /* ── Input ── */
@@ -297,6 +299,7 @@ body {
   cursor: pointer;
   transition: transform 0.28s cubic-bezier(.34,1.56,.64,1), box-shadow 0.28s;
   white-space: nowrap;
+  filter: url(#rough-pill);
 }
 .btn-chiikawa-primary {
   background: linear-gradient(135deg, var(--deep), var(--mid));
@@ -308,6 +311,7 @@ body {
     3px 1px 0 0 rgba(53,88,114,0.12),
     0 4px 20px rgba(53,88,114,0.35);
   position: relative;
+  filter: url(#rough-pill);
 }
 .btn-chiikawa-primary::after {
   content: '';
@@ -331,6 +335,7 @@ body {
   color: var(--deep);
   border: 2px solid rgba(122,170,206,0.50);
   box-shadow: 0 2px 12px rgba(53,88,114,0.09);
+  filter: url(#rough-pill);
 }
 .btn-chiikawa-secondary:hover {
   transform: translateY(-3px) scale(1.04);
@@ -439,6 +444,7 @@ body {
     -1px -2px 0 0.5px rgba(122,170,206,0.1),
     0 4px 12px rgba(53,88,114,0.12);
   position: relative;
+  filter: url(#rough-sketch);
 }
 
 /* Sketchy pill (skill badges beside pfp) */
@@ -451,7 +457,13 @@ body {
     2px 0px 0 0.5px rgba(122,170,206,0.15),
     -2px 1px 0 0.5px rgba(156,213,255,0.12),
     0 4px 14px rgba(53,88,114,0.13);
-  position: relative;
+  filter: url(#rough-pill);
+  width: max-content;
+  max-width: max-content;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 /* Sketchy badge (mascot badge bottom-right of pfp) */
@@ -465,6 +477,7 @@ body {
     -2px -1px 0 0.5px rgba(156,213,255,0.15),
     0 6px 18px rgba(53,88,114,0.15);
   position: relative;
+  filter: url(#rough-pill);
 }
 
 /* Sketchy card (chiikawa-card override) */
@@ -482,6 +495,7 @@ body {
     0 8px 32px rgba(53,88,114,0.10),
     0 2px 8px rgba(53,88,114,0.06) !important;
   position: relative;
+  filter: url(#rough-pill);
 }
 
 /* SVG-based sketchy border overlay on chiikawa-card via pseudo-element */
@@ -580,6 +594,7 @@ footer::before {
     1px -1px 0 0 rgba(122,170,206,0.22),
     -1px 1px 0 0 rgba(156,213,255,0.16),
     0 3px 8px rgba(53,88,114,0.07) !important;
+  filter: url(#rough-pill);
 }
 .tag-pill::after {
   content: '';
@@ -615,6 +630,7 @@ footer::before {
     1.5px -1px 0 0 rgba(122,170,206,0.2),
     -1px 1.5px 0 0 rgba(156,213,255,0.15),
     0 3px 10px rgba(53,88,114,0.07) !important;
+  filter: url(#rough-pill);
 }
 .tab-btn-sketchy::after {
   content: '';
@@ -636,6 +652,7 @@ footer::before {
     -1.5px 2px 0 0 rgba(122,170,206,0.2),
     3px 1.5px 0 0 rgba(53,88,114,0.12),
     0 4px 16px rgba(53,88,114,0.35) !important;
+  filter: url(#rough-pill);
 }
 .tab-btn-sketchy-active::after {
   content: '';
@@ -657,6 +674,7 @@ footer::before {
     -1px 2px 0 0 rgba(156,213,255,0.15),
     2.5px 1.5px 0 0 rgba(122,170,206,0.1),
     0 2px 12px rgba(53,88,114,0.08) !important;
+  filter: url(#rough-pill);
 }
 .skill-card-sketchy::after {
   content: '';
@@ -677,6 +695,7 @@ footer::before {
     2px -1px 0 0 rgba(122,170,206,0.22),
     -1px 2px 0 0 rgba(156,213,255,0.16),
     1.5px 1.5px 0 0 rgba(122,170,206,0.1) !important;
+  filter: url(#rough-pill);
 }
 .icon-sq-sketchy::after {
   content: '';
@@ -705,11 +724,13 @@ footer::before {
     0 0 0 3px rgba(156,213,255,0.2),
     1px -1px 0 3px rgba(122,170,206,0.08),
     0 0 10px rgba(156,213,255,0.55) !important;
+  filter: url(#rough-sketch);
 }
 
 /* ── Scroll Progress bar sketchy ── */
 #scroll-progress {
   border-bottom: 1.5px solid rgba(156,213,255,0.4);
+  filter: url(#rough-pill);
 }
 
 /* ── Back to top sketchy ── */
@@ -792,4 +813,3 @@ footer::before {
   transform: translate(1px, -1px) rotate(0.6deg);
   pointer-events: none;
 }
-

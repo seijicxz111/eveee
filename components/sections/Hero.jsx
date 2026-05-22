@@ -5,7 +5,6 @@ import {
   motion,
   useMotionValue, useSpring, useTransform,
   AnimatePresence,
-  useScroll,
 } from 'framer-motion';
 import Image from 'next/image';
 
@@ -111,42 +110,20 @@ function AnimatedName({ text, className, delay = 0, gradient = false }) {
 }
 
 // Hand-drawn SVG blob shape for the profile frame
-function HandDrawnProfileFrame({ size = 280 }) {
-  // A wobbly, hand-sketched circle path using SVG
-  // The path traces a rough circle with slight irregularities to look drawn
-  const s = size;
-  const c = s / 2;
-  const r = c - 6;
+function HandDrawnProfileFrame({ w = 260, h = 300 }) {
+  const rx = Math.min(w, h) * 0.46;
+  const p = 4; // padding from edge
   return (
     <svg
-      width={s}
-      height={s}
-      viewBox={`0 0 ${s} ${s}`}
+      width={w} height={h}
+      viewBox={`0 0 ${w} ${h}`}
       style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2 }}
       fill="none"
     >
-      <defs>
-        <clipPath id="sketchy-clip">
-          <path d={`
-            M ${c}, ${c - r + 4}
-            C ${c + r*0.35}, ${c - r - 2}, ${c + r + 3}, ${c - r*0.4}, ${c + r - 2}, ${c + 2}
-            C ${c + r + 4}, ${c + r*0.45}, ${c + r*0.3}, ${c + r + 3}, ${c - 2}, ${c + r - 3}
-            C ${c - r*0.4}, ${c + r + 5}, ${c - r - 3}, ${c + r*0.35}, ${c - r + 3}, ${c - 1}
-            C ${c - r - 2}, ${c - r*0.4}, ${c - r*0.3}, ${c - r + 1}, ${c}, ${c - r + 4}
-            Z
-          `} />
-        </clipPath>
-      </defs>
-      {/* Outer sketchy stroke - slightly offset, double line feel */}
-      <path
-        d={`
-          M ${c}, ${c - r + 4}
-          C ${c + r*0.35}, ${c - r - 2}, ${c + r + 3}, ${c - r*0.4}, ${c + r - 2}, ${c + 2}
-          C ${c + r + 4}, ${c + r*0.45}, ${c + r*0.3}, ${c + r + 3}, ${c - 2}, ${c + r - 3}
-          C ${c - r*0.4}, ${c + r + 5}, ${c - r - 3}, ${c + r*0.35}, ${c - r + 3}, ${c - 1}
-          C ${c - r - 2}, ${c - r*0.4}, ${c - r*0.3}, ${c - r + 1}, ${c}, ${c - r + 4}
-          Z
-        `}
+      {/* Outer sketchy stroke */}
+      <rect
+        x={p} y={p} width={w - p*2} height={h - p*2}
+        rx={rx} ry={rx}
         stroke="rgba(122,170,206,0.85)"
         strokeWidth="3.5"
         strokeLinecap="round"
@@ -154,16 +131,10 @@ function HandDrawnProfileFrame({ size = 280 }) {
         fill="none"
         style={{ filter: 'url(#sketchy-filter)' }}
       />
-      {/* Inner slightly offset stroke for double-line hand-drawn feel */}
-      <path
-        d={`
-          M ${c + 1}, ${c - r + 7}
-          C ${c + r*0.33}, ${c - r + 1}, ${c + r}, ${c - r*0.38}, ${c + r - 5}, ${c + 3}
-          C ${c + r + 1}, ${c + r*0.42}, ${c + r*0.28}, ${c + r}, ${c - 3}, ${c + r - 6}
-          C ${c - r*0.38}, ${c + r + 2}, ${c - r}, ${c + r*0.3}, ${c - r + 6}, ${c - 2}
-          C ${c - r + 1}, ${c - r*0.38}, ${c - r*0.28}, ${c - r + 3}, ${c + 1}, ${c - r + 7}
-          Z
-        `}
+      {/* Inner offset stroke — hand-drawn double line */}
+      <rect
+        x={p+3} y={p+3} width={w - p*2 - 6} height={h - p*2 - 6}
+        rx={rx - 3} ry={rx - 3}
         stroke="rgba(156,213,255,0.5)"
         strokeWidth="2"
         strokeLinecap="round"
@@ -178,9 +149,6 @@ export default function Hero() {
   const [roleIdx,   setRoleIdx]   = useState(0);
   const [displayed, setDisplayed] = useState('');
   const [typing,    setTyping]    = useState(true);
-  const { scrollY } = useScroll();
-  const heroY = useTransform(scrollY, [0, 500], [0, -80]);
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0.3]);
 
   useEffect(() => {
     const target = ROLES[roleIdx];
@@ -212,19 +180,28 @@ export default function Hero() {
     show:   { opacity: 1, y: 0,  filter: 'blur(0px)', transition: { type: 'spring', stiffness: 240, damping: 22 } },
   };
 
+  const NextJsIcon = () => (
+    <svg width="12" height="12" viewBox="0 0 128 128" style={{ marginRight: 6, display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }} aria-hidden="true">
+      <circle cx="64" cy="64" r="64" fill="#355872"/>
+      <path d="M106.3 110.4L49.2 38H38v51.9h8.5V49.2l52.5 66.6c2.6-1.7 5-3.6 7.3-5.4z" fill="#fff"/>
+      <rect x="81" y="38" width="8.5" height="52" fill="#fff"/>
+    </svg>
+  );
+
   const SKILL_BADGES = [
-    { label: 'React',   icon: 'fab fa-react',  color: '#61DBFB', x: '-left-10', y: 'top-8',     d: 0   },
-    { label: 'Next.js', icon: 'fas fa-code',   color: '#355872', x: '-right-10',y: 'top-16',    d: 0.5 },
-    { label: 'Figma',   icon: 'fab fa-figma',  color: '#b0c8d8', x: '-left-6',  y: 'bottom-16', d: 1   },
+    { label: 'React',   icon: 'fab fa-react',  color: '#61DBFB', pos: { top: '30%',    left: '8px'  }, d: 0,   customIcon: null       },
+    { label: 'Next.js', icon: null,             color: '#355872', pos: { top: '22%',    right: '8px' }, d: 0.5, customIcon: NextJsIcon },
+    { label: 'Figma',   icon: 'fab fa-figma',  color: '#b0c8d8', pos: { bottom: '30%', left: '8px'  }, d: 1,   customIcon: null       },
   ];
 
-  const PFP_SIZE = 280;
+  const PFP_W = 220;
+  const PFP_H = 240;
 
   return (
     <motion.section
       id="about"
       className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden"
-      style={{ y: heroY }}
+      
     >
       {/* Floating decorations */}
       {DECOS.map((d, i) => <FloatingDeco key={i} {...d} />)}
@@ -234,7 +211,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background: 'radial-gradient(ellipse 70% 60% at 50% 50%, rgba(156,213,255,0.12) 0%, transparent 70%)',
-          opacity: heroOpacity,
+          opacity: 0.6,
         }}
       />
 
@@ -247,7 +224,7 @@ export default function Hero() {
             {/* Name with letter-by-letter reveal */}
             <motion.h1
               variants={item}
-              className="font-display font-800 text-5xl md:text-6xl leading-none mb-4"
+              className="font-display font-800 text-4xl md:text-5xl leading-none mb-4"
               style={{ letterSpacing: '-0.02em', perspectiveOrigin: 'left', perspective: 600 }}
             >
               <AnimatedName
@@ -357,78 +334,77 @@ export default function Hero() {
             transition={{ delay: 0.2, type: 'spring', stiffness: 160, damping: 14 }}
             className="order-1 md:order-2 flex items-center justify-center"
           >
-            <MagneticProfile>
-              <div className="relative" style={{ width: PFP_SIZE, height: PFP_SIZE }}>
+            {/* Outer wrapper — badges live here, outside MagneticProfile */}
+            <div style={{ position: 'relative', width: PFP_W + 180, height: PFP_H + 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-                {/* Hand-drawn border frame (replaces rings) */}
-                <HandDrawnProfileFrame size={PFP_SIZE} />
-
-                {/* Profile photo — clipped to the same sketchy shape */}
-                <motion.div
-                  className="absolute inset-0 overflow-hidden"
-                  style={{
-                    clipPath: `path('M ${PFP_SIZE/2}, ${PFP_SIZE/2 - PFP_SIZE/2 + 10} C ${PFP_SIZE/2 + PFP_SIZE*0.175}, ${PFP_SIZE/2 - PFP_SIZE/2 - 4}, ${PFP_SIZE/2 + PFP_SIZE/2 + 5}, ${PFP_SIZE/2 - PFP_SIZE*0.2}, ${PFP_SIZE/2 + PFP_SIZE/2 - 6}, ${PFP_SIZE/2 + 6} C ${PFP_SIZE/2 + PFP_SIZE/2 + 7}, ${PFP_SIZE/2 + PFP_SIZE*0.225}, ${PFP_SIZE/2 + PFP_SIZE*0.15}, ${PFP_SIZE/2 + PFP_SIZE/2 + 5}, ${PFP_SIZE/2 - 4}, ${PFP_SIZE/2 + PFP_SIZE/2 - 7} C ${PFP_SIZE/2 - PFP_SIZE*0.2}, ${PFP_SIZE/2 + PFP_SIZE/2 + 7}, ${PFP_SIZE/2 - PFP_SIZE/2 - 5}, ${PFP_SIZE/2 + PFP_SIZE*0.175}, ${PFP_SIZE/2 - PFP_SIZE/2 + 7}, ${PFP_SIZE/2 - 3} C ${PFP_SIZE/2 - PFP_SIZE/2 - 4}, ${PFP_SIZE/2 - PFP_SIZE*0.2}, ${PFP_SIZE/2 - PFP_SIZE*0.15}, ${PFP_SIZE/2 - PFP_SIZE/2 + 5}, ${PFP_SIZE/2}, ${PFP_SIZE/2 - PFP_SIZE/2 + 10} Z')`,
-                    background: '#F7F8F0',
-                  }}
-                  animate={{ y: [0, -12, 0] }}
-                  transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-                  whileHover={{ scale: 1.04 }}
-                >
-                  <Image src="/pfp.png" alt="CJ Steeve Cadenas" fill className="object-cover" />
-
-                  {/* Shimmer overlay */}
+              {/* Skill badges — absolutely positioned, using table-cell to guarantee shrink-to-content */}
+              {SKILL_BADGES.map((b, i) => (
+                <div key={b.label} style={{ position: 'absolute', ...b.pos, display: 'table' }}>
                   <motion.div
-                    className="absolute inset-0"
-                    style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.28) 0%, transparent 60%)' }}
-                    animate={{ opacity: [0.3, 0.9, 0.3] }}
-                    transition={{ duration: 2.8, repeat: Infinity }}
-                  />
-                </motion.div>
-
-                {/* Mascot badge */}
-                <motion.div
-                  className="absolute -bottom-5 -right-5 bg-white/90 sketchy-badge p-2 shadow-lg"
-                  initial={{ opacity: 0, scale: 0, rotate: -20 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0, y: [0, -6, 0] }}
-                  transition={{
-                    opacity: { delay: 0.8 },
-                    scale:   { delay: 0.8, type: 'spring', stiffness: 320 },
-                    rotate:  { delay: 0.8, type: 'spring', stiffness: 320 },
-                    y:       { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 },
-                  }}
-                  whileHover={{ scale: 1.22, rotate: 18 }}
-                >
-                  <div className="relative w-14 h-14">
-                    <Image src="/icon1.png" alt="mascot" fill className="object-contain" />
-                  </div>
-                </motion.div>
-
-                {/* Floating skill badges */}
-                {SKILL_BADGES.map((b, i) => (
-                  <motion.div
-                    key={b.label}
-                    className={`absolute ${b.x} ${b.y} bg-white/90 sketchy-pill px-3 py-1.5 flex items-center gap-2 shadow-lg`}
-                    initial={{ opacity: 0, scale: 0, x: i % 2 === 0 ? -30 : 30 }}
-                    animate={{ opacity: 1, scale: 1, x: 0, y: [0, -8, 0] }}
+                    className="bg-white/90 sketchy-pill px-3 py-1.5 shadow-lg"
+                    style={{ display: 'table-cell', whiteSpace: 'nowrap', verticalAlign: 'middle' }}
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
                     transition={{
                       opacity: { delay: 1 + i * 0.2, duration: 0.4 },
                       scale:   { delay: 1 + i * 0.2, type: 'spring', stiffness: 300 },
-                      x:       { delay: 1 + i * 0.2, type: 'spring', stiffness: 300 },
                       y:       { duration: 3.5 + b.d, repeat: Infinity, ease: 'easeInOut', delay: b.d + 1 },
                     }}
                     whileHover={{ scale: 1.14, y: -6, boxShadow: '0 10px 30px rgba(53,88,114,0.2)' }}
                   >
-                    <motion.i
-                      className={`${b.icon} text-xs`}
-                      style={{ color: b.color }}
-                      animate={{ rotate: [0, 360] }}
-                      transition={{ duration: 8 + i * 2, repeat: Infinity, ease: 'linear' }}
-                    />
+                    {b.customIcon ? <b.customIcon /> : <i className={`${b.icon} text-xs`} style={{ color: b.color, marginRight: '6px' }} />}
                     <span className="text-xs font-body font-800" style={{ color: '#355872' }}>{b.label}</span>
                   </motion.div>
-                ))}
-              </div>
-            </MagneticProfile>
+                </div>
+              ))}
+
+              <MagneticProfile>
+                <div className="relative" style={{ width: PFP_W, height: PFP_H }}>
+
+                  {/* Hand-drawn border frame */}
+                  <HandDrawnProfileFrame w={PFP_W} h={PFP_H} />
+
+                  {/* Profile photo */}
+                  <motion.div
+                    className="absolute inset-0 overflow-hidden"
+                    style={{
+                      clipPath: `inset(0 0 0 0 round ${PFP_H * 0.48}px / ${PFP_H * 0.48}px)`,
+                      background: 'transparent',
+                    }}
+                    animate={{ y: [0, -12, 0] }}
+                    transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
+                    whileHover={{ scale: 1.04 }}
+                  >
+                    <Image src="/pfp.png" alt="CJ Steeve Cadenas" fill className="object-cover" />
+                    <motion.div
+                      className="absolute inset-0"
+                      style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.28) 0%, transparent 60%)' }}
+                      animate={{ opacity: [0.3, 0.9, 0.3] }}
+                      transition={{ duration: 2.8, repeat: Infinity }}
+                    />
+                  </motion.div>
+                </div>
+              </MagneticProfile>
+
+              {/* Mascot badge — separated from pfp, anchored to outer wrapper */}
+              <motion.div
+                style={{ position: 'absolute', bottom: '20px', right: '70px' }}
+                className="bg-white sketchy-badge p-3 shadow-lg"
+                initial={{ opacity: 0, scale: 0, rotate: -20 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0, y: [0, -6, 0] }}
+                transition={{
+                  opacity: { delay: 0.8 },
+                  scale:   { delay: 0.8, type: 'spring', stiffness: 320 },
+                  rotate:  { delay: 0.8, type: 'spring', stiffness: 320 },
+                  y:       { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1 },
+                }}
+                whileHover={{ scale: 1.22, rotate: 18 }}
+              >
+                <div className="relative w-20 h-20">
+                  <Image src="/icon1.png" alt="mascot" fill className="object-contain" />
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </div>
 
