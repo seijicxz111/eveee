@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
+import { FaSeedling } from 'react-icons/fa';
 
 export default function SectionTitle({ icon, title, sub }) {
   const ref = useRef(null);
@@ -25,7 +26,7 @@ export default function SectionTitle({ icon, title, sub }) {
         {title}
       </motion.h2>
 
-      {/* Decorative line with flower */}
+      {/* Decorative line with seedling */}
       <div className="flex items-center justify-center gap-3 mb-3">
         <motion.svg
           width="48" height="8" viewBox="0 0 48 8"
@@ -37,12 +38,16 @@ export default function SectionTitle({ icon, title, sub }) {
           <path d="M2,4 C8,2.5 14,5.5 20,3.5 C26,1.5 32,5 38,4 C42,3.2 45,4.5 47,4" stroke="rgba(156,213,255,0.75)" strokeWidth="1.8" fill="none" strokeLinecap="round" />
           <path d="M1,4.5 C7,3 13,6 19,4 C25,2 31,5.5 37,4.5 C41,3.8 44,5 46,4.5" stroke="rgba(122,170,206,0.3)" strokeWidth="1" fill="none" strokeLinecap="round" />
         </motion.svg>
-        <motion.i
-          className="fas fa-seedling text-xs"
-          style={{ color: '#9CD5FF' }}
+
+        {/* motion.span replaces motion.i — same animation props, icon rendered inside */}
+        <motion.span
+          style={{ color: '#9CD5FF', fontSize: '0.75rem', display: 'inline-flex', alignItems: 'center' }}
           animate={inView ? { rotate: [0, 15, -10, 0], scale: [0.8, 1.2, 1] } : {}}
           transition={{ delay: 0.28, duration: 0.6 }}
-        />
+        >
+          <FaSeedling />
+        </motion.span>
+
         <motion.svg
           width="48" height="8" viewBox="0 0 48 8"
           initial={{ scaleX: 0, opacity: 0 }}

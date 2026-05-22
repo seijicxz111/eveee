@@ -3,12 +3,13 @@
 import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import SectionTitle from '@/components/ui/SectionTitle';
+import Icon from '@/components/ui/Icon';
 
 const SOCIALS = [
-  { icon: 'fab fa-github',    label: 'GitHub',    href: 'https://github.com/seijicxz111',            value: 'seijicxz',          color: '#355872' },
-  { icon: 'fab fa-facebook-f',label: 'Facebook',  href: 'https://www.facebook.com/violeeee.07',   value: 'facebook.com/violeeee.07', color: '#1877f2' },
-  { icon: 'fab fa-linkedin',  label: 'LinkedIn',  href: '#',                                       value: 'seijicxz',          color: '#0a66c2' },
-  { icon: 'fas fa-envelope',  label: 'Email',     href: 'mailto:cjsteevecadenas0@gmail.com',       value: 'cjsteevecadenas0@gmail.com', copyable: true, color: '#7AAACE' },
+  { icon: 'fab fa-github',    label: 'GitHub',   href: 'https://github.com/seijicxz111',          value: 'seijicxz',                 color: '#355872' },
+  { icon: 'fab fa-facebook-f',label: 'Facebook', href: 'https://www.facebook.com/violeeee.07',    value: 'facebook.com/violeeee.07', color: '#1877f2' },
+  { icon: 'fab fa-linkedin',  label: 'LinkedIn', href: '#',                                        value: 'seijicxz',                 color: '#0a66c2' },
+  { icon: 'fas fa-envelope',  label: 'Email',    href: 'mailto:cjsteevecadenas0@gmail.com',        value: 'cjsteevecadenas0@gmail.com', copyable: true, color: '#7AAACE' },
 ];
 
 const fieldVariants = {
@@ -62,11 +63,14 @@ export default function Contact() {
               transition={{ type: 'spring', stiffness: 300 }}
             >
               <div className="flex items-center gap-2 mb-2">
-                <motion.i
-                  className="fas fa-hand-wave text-mid text-lg"
+                {/* motion.span replaces motion.i — same animation, icon inside */}
+                <motion.span
+                  className="inline-flex items-center text-mid text-lg"
                   animate={{ rotate: [0, 20, -10, 20, 0] }}
                   transition={{ repeat: Infinity, duration: 2.5, delay: 1 }}
-                />
+                >
+                  <Icon name="fas fa-hand-wave" />
+                </motion.span>
                 <h3 className="font-display font-800 text-deep text-lg">Say Hello!</h3>
               </div>
               <p className="text-deep/55 font-body text-sm leading-relaxed">
@@ -88,7 +92,7 @@ export default function Contact() {
                     className="w-10 h-10 rounded-xl bg-sky/15 border border-sky/25 flex items-center justify-center flex-shrink-0 icon-sq"
                     whileHover={{ scale: 1.1, backgroundColor: `${s.color}22` }}
                   >
-                    <i className={`${s.icon} text-sm`} style={{ color: s.color }} />
+                    <Icon name={s.icon} className="text-sm" style={{ color: s.color }} />
                   </motion.div>
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-body font-700 text-deep/45">{s.label}</p>
@@ -110,22 +114,26 @@ export default function Contact() {
                     >
                       <AnimatePresence mode="wait">
                         {copied === s.label ? (
-                          <motion.i
+                          <motion.span
                             key="check"
-                            className="fas fa-check text-xs text-emerald-500"
+                            className="inline-flex items-center text-emerald-500"
                             initial={{ scale: 0, rotate: -90 }}
                             animate={{ scale: 1, rotate: 0 }}
                             exit={{ scale: 0 }}
                             transition={{ type: 'spring', stiffness: 400 }}
-                          />
+                          >
+                            <Icon name="fas fa-check" className="text-xs" />
+                          </motion.span>
                         ) : (
-                          <motion.i
+                          <motion.span
                             key="copy"
-                            className="fas fa-copy text-xs"
+                            className="inline-flex items-center"
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             exit={{ scale: 0 }}
-                          />
+                          >
+                            <Icon name="fas fa-copy" className="text-xs" />
+                          </motion.span>
                         )}
                       </AnimatePresence>
                     </motion.button>
@@ -155,12 +163,14 @@ export default function Contact() {
                     className="text-center py-10"
                     transition={{ type: 'spring', stiffness: 300, damping: 25 }}
                   >
-                    <motion.i
-                      className="fas fa-check-circle text-emerald-400 text-5xl mb-3 block"
+                    <motion.span
+                      className="text-emerald-400 text-5xl mb-3 flex justify-center"
                       initial={{ scale: 0, rotate: -90 }}
                       animate={{ scale: 1, rotate: 0 }}
                       transition={{ type: 'spring', stiffness: 400, damping: 20, delay: 0.1 }}
-                    />
+                    >
+                      <Icon name="fas fa-check-circle" />
+                    </motion.span>
                     <h4 className="font-display font-800 text-deep text-xl mb-2">Message sent!</h4>
                     <p className="text-deep/50 font-body text-sm">Thanks for reaching out. I'll get back to you soon~</p>
                   </motion.div>
@@ -208,16 +218,19 @@ export default function Contact() {
                           {status === 'sending' ? (
                             <motion.span key="sending" className="flex items-center gap-2 justify-center"
                               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                              <motion.i
-                                className="fas fa-paper-plane text-xs"
+                              <motion.span
+                                className="inline-flex items-center"
                                 animate={{ x: [0, 6, 0], y: [0, -6, 0] }}
                                 transition={{ repeat: Infinity, duration: 0.7 }}
-                              /> Sending…
+                              >
+                                <Icon name="fas fa-paper-plane" className="text-xs" />
+                              </motion.span>
+                              Sending…
                             </motion.span>
                           ) : (
                             <motion.span key="idle" className="flex items-center gap-2 justify-center"
                               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                              <i className="fas fa-paper-plane text-xs" /> Send Message
+                              <Icon name="fas fa-paper-plane" className="text-xs" /> Send Message
                             </motion.span>
                           )}
                         </AnimatePresence>

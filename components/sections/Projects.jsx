@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import SectionTitle from '@/components/ui/SectionTitle';
+import Icon from '@/components/ui/Icon';
 
 const LANG_COLORS = {
   JavaScript: '#F7DF1E', TypeScript: '#3178C6', Python: '#3572A5',
@@ -11,8 +12,6 @@ const LANG_COLORS = {
   PHP: '#777BB4', Java: '#B07219', 'C++': '#F34B7D',
   default: '#9CD5FF',
 };
-
-const FILTERS = ['All', 'JavaScript', 'TypeScript', 'Python', 'HTML', 'CSS'];
 
 function RepoCard({ repo, index }) {
   const ref = useRef(null);
@@ -31,7 +30,7 @@ function RepoCard({ repo, index }) {
       <div className="flex items-start justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-sky/15 flex items-center justify-center icon-sq">
-            <i className="fab fa-github text-deep/60 text-sm" />
+            <Icon name="fab fa-github" className="text-deep/60 text-sm" />
           </div>
           <h3 className="font-display font-700 text-deep text-sm leading-tight line-clamp-1">
             {repo.name}
@@ -66,10 +65,16 @@ function RepoCard({ repo, index }) {
             </span>
           )}
           {repo.stargazers_count > 0 && (
-            <span className="flex items-center gap-1"><i className="fas fa-star text-[10px]" />{repo.stargazers_count}</span>
+            <span className="flex items-center gap-1">
+              <Icon name="fas fa-star" className="text-[10px]" />
+              {repo.stargazers_count}
+            </span>
           )}
           {repo.forks_count > 0 && (
-            <span className="flex items-center gap-1"><i className="fas fa-code-branch text-[10px]" />{repo.forks_count}</span>
+            <span className="flex items-center gap-1">
+              <Icon name="fas fa-code-branch" className="text-[10px]" />
+              {repo.forks_count}
+            </span>
           )}
         </div>
         <a
@@ -79,7 +84,7 @@ function RepoCard({ repo, index }) {
           className="w-7 h-7 rounded-full flex items-center justify-center bg-sky/15 text-mid hover:bg-mid hover:text-white transition-all duration-200 border border-sky/30"
           aria-label={`View ${repo.name} on GitHub`}
         >
-          <i className="fas fa-arrow-up-right-from-square text-[10px]" />
+          <Icon name="fas fa-arrow-up-right-from-square" className="text-[10px]" />
         </a>
       </div>
     </motion.div>
@@ -193,9 +198,9 @@ export default function Projects() {
               href="https://github.com/seijicxz"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-chiikawa btn-chiikawa-primary mt-4 inline-flex"
+              className="btn-chiikawa btn-chiikawa-primary mt-4 inline-flex items-center gap-2"
             >
-              <i className="fab fa-github" /> View on GitHub
+              <Icon name="fab fa-github" /> View on GitHub
             </a>
           </div>
         ) : filtered.length === 0 ? (
@@ -222,9 +227,9 @@ export default function Projects() {
               >
                 <button
                   onClick={() => setPage(p => p + 1)}
-                  className="btn-chiikawa btn-chiikawa-secondary"
+                  className="btn-chiikawa btn-chiikawa-secondary inline-flex items-center gap-2"
                 >
-                  <i className="fas fa-plus text-xs" /> Load More
+                  <Icon name="fas fa-plus" className="text-xs" /> Load More
                 </button>
               </motion.div>
             )}

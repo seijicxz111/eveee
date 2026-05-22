@@ -3,6 +3,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { FaGithub, FaTwitter } from 'react-icons/fa';
+
+const SOCIAL_LINKS = [
+  { href: 'https://github.com/seijicxz', Icon: FaGithub,  label: 'GitHub'  },
+  { href: '#',                            Icon: FaTwitter, label: 'Twitter' },
+];
 
 // Floating hearts that pop up and drift away
 function FloatingHeart() {
@@ -14,28 +20,26 @@ function FloatingHeart() {
       const key = id++;
       setHearts(h => [...h, {
         key,
-        x: (Math.random() - 0.5) * 40, // drift left/right
+        x: (Math.random() - 0.5) * 40,
         delay: 0,
         size: 10 + Math.random() * 8,
       }]);
-      // remove after animation completes
       setTimeout(() => setHearts(h => h.filter(p => p.key !== key)), 1800);
     };
-    spawn(); // one on mount
+    spawn();
     const iv = setInterval(spawn, 900);
     return () => clearInterval(iv);
   }, []);
 
   return (
     <span className="relative inline-block ml-1" style={{ width: 22, height: 22, verticalAlign: 'middle' }}>
-      {/* Base jumping icon */}
       <motion.span
         className="inline-block"
         animate={{
-          y:        [0, -10, 0, -5, 0],
-          scaleX:   [1, 0.85, 1.1, 0.95, 1],
-          scaleY:   [1, 1.15, 0.9, 1.05, 1],
-          rotate:   [0, -6, 4, -2, 0],
+          y:      [0, -10, 0, -5, 0],
+          scaleX: [1, 0.85, 1.1, 0.95, 1],
+          scaleY: [1, 1.15, 0.9, 1.05, 1],
+          rotate: [0, -6, 4, -2, 0],
         }}
         transition={{ duration: 0.9, repeat: Infinity, ease: 'easeInOut', repeatDelay: 0.4 }}
         style={{ transformOrigin: 'bottom center' }}
@@ -43,7 +47,6 @@ function FloatingHeart() {
         <Image src="/footer_heart.png" alt="heart" width={24} height={24} className="object-contain" />
       </motion.span>
 
-      {/* Floating particles */}
       <AnimatePresence>
         {hearts.map(h => (
           <motion.span
@@ -84,11 +87,8 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-5 py-8">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            {/* Footer icon */}
             <Image src="/footer_icon.png" alt="footer icon" width={28} height={28} className="object-contain" />
-            <span className="font-display font-700 text-deep text-sm">
-              Seijicxz
-            </span>
+            <span className="font-display font-700 text-deep text-sm">Seijicxz</span>
           </div>
 
           <p className="text-xs font-body text-deep/40 text-center">
@@ -100,20 +100,18 @@ export default function Footer() {
           </p>
 
           <div className="flex items-center gap-2">
-            {[
-              { href: 'https://github.com/seijicxz', icon: 'fab fa-github' },
-              { href: '#', icon: 'fab fa-twitter' },
-            ].map(s => (
+            {SOCIAL_LINKS.map(({ href, Icon: SocialIcon, label }) => (
               <motion.a
-                key={s.icon}
-                href={s.href}
+                key={label}
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={label}
                 className="w-8 h-8 rounded-full flex items-center justify-center bg-sky/10 border border-sky/25 text-deep/50 hover:text-deep hover:border-mid transition-all text-xs sketchy-circle"
                 whileHover={{ y: -2, scale: 1.1 }}
                 whileTap={{ scale: 0.92 }}
               >
-                <i className={s.icon} />
+                <SocialIcon />
               </motion.a>
             ))}
           </div>

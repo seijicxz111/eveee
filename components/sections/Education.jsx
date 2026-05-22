@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import SectionTitle from '@/components/ui/SectionTitle';
+import Icon from '@/components/ui/Icon';
 
 const EDUCATION = [
   {
@@ -90,7 +91,7 @@ function TimelineItem({ item, index }) {
             whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
             transition={{ duration: 0.4 }}
           >
-            <i className={`${item.icon} text-sm`} style={{ color: item.iconColor }} />
+            <Icon name={item.icon} className="text-sm" style={{ color: item.iconColor }} />
           </motion.div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2 flex-wrap">
@@ -113,7 +114,7 @@ function TimelineItem({ item, index }) {
               className="ml-auto text-xs font-body font-700 text-mid flex items-center gap-1 hover:text-deep transition-colors"
               whileHover={{ x: 2 }}
             >
-              View <i className="fas fa-arrow-up-right-from-square text-[10px]" />
+              View <Icon name="fas fa-arrow-up-right-from-square" className="text-[10px]" />
             </motion.a>
           )}
         </div>
@@ -144,7 +145,7 @@ export default function Education() {
                 className="w-8 h-8 rounded-xl bg-sky/20 flex items-center justify-center icon-sq"
                 whileHover={{ rotate: 10, scale: 1.1 }}
               >
-                <i className="fas fa-school text-mid text-sm" />
+                <Icon name="fas fa-school" className="text-mid text-sm" />
               </motion.div>
               Academics
             </motion.h3>
@@ -170,7 +171,7 @@ export default function Education() {
                 className="w-8 h-8 rounded-xl bg-leaf/30 flex items-center justify-center icon-sq"
                 whileHover={{ rotate: 10, scale: 1.1 }}
               >
-                <i className="fas fa-certificate text-emerald-500 text-sm" />
+                <Icon name="fas fa-certificate" className="text-emerald-500 text-sm" />
               </motion.div>
               Certifications
             </motion.h3>

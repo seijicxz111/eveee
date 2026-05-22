@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { FaChevronUp } from 'react-icons/fa';
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
@@ -21,7 +22,7 @@ export default function BackToTop() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
     >
-      <i className="fas fa-chevron-up text-sm" />
+      <FaChevronUp className="text-sm" />
     </motion.button>
   );
 }

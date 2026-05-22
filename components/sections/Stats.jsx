@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useAnimation } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import Icon from '@/components/ui/Icon';
 
 const STATS = [
   { value: 5,   suffix: '+', label: 'Projects Built',   icon: 'fas fa-box-open',   color: 'bg-sky/15   border-sky/30' },
@@ -65,7 +66,7 @@ export default function Stats() {
                 }
                 whileHover={stat.spin ? {} : { rotate: [0, -15, 15, -8, 0] }}
               >
-                <i className={`${stat.icon} text-mid text-sm`} />
+                <Icon name={stat.icon} className="text-mid text-sm" />
               </motion.div>
               <Counter target={stat.value} suffix={stat.suffix} />
               <p className="text-deep/55 text-xs font-body font-700 mt-1 tracking-wide">{stat.label}</p>

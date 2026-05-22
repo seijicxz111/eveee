@@ -7,9 +7,14 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 import Image from 'next/image';
+import Icon from '@/components/ui/Icon';
+import {
+  FaGithub, FaFacebookF, FaLinkedin,
+  FaPaperPlane, FaFolderOpen, FaChevronDown,
+} from 'react-icons/fa';
 
-const FIRST_NAME  = 'CJ Steeve';
-const LAST_NAME   = 'Cadenas';
+const FIRST_NAME = 'CJ Steeve';
+const LAST_NAME  = 'Cadenas';
 
 const ROLES = [
   'Web Developer',
@@ -20,20 +25,21 @@ const ROLES = [
 
 // Floating deco shapes
 const DECOS = [
-  { icon: 'fas fa-star',     color: '#9CD5FF', top: '12%',   left: '6%',    size: '2rem',   delay: 0   },
-  { icon: 'fas fa-heart',    color: '#c4d8ee', top: '20%',   right: '8%',   size: '1.5rem', delay: 0.8 },
-  { icon: 'fas fa-seedling', color: '#7AAACE', bottom: '22%',left: '4%',    size: '1.8rem', delay: 1.4 },
-  { icon: 'fas fa-music',    color: '#b0c8d8', bottom: '32%',right: '5%',   size: '1.6rem', delay: 0.4 },
-  { icon: 'fas fa-cloud',    color: '#9CD5FF', top: '55%',   left: '10%',   size: '1.3rem', delay: 2   },
-  { icon: 'fas fa-paw',      color: '#c4d8ee', top: '38%',   left: '18%',   size: '1.1rem', delay: 1.1 },
-  { icon: 'fas fa-star',     color: '#b0c8d8', top: '65%',   right: '12%',  size: '0.9rem', delay: 1.7 },
+  { icon: 'fas fa-star',     color: '#9CD5FF', top: '12%',    left: '6%',   size: '2rem',   delay: 0   },
+  { icon: 'fas fa-heart',    color: '#c4d8ee', top: '20%',    right: '8%',  size: '1.5rem', delay: 0.8 },
+  { icon: 'fas fa-seedling', color: '#7AAACE', bottom: '22%', left: '4%',   size: '1.8rem', delay: 1.4 },
+  { icon: 'fas fa-music',    color: '#b0c8d8', bottom: '32%', right: '5%',  size: '1.6rem', delay: 0.4 },
+  { icon: 'fas fa-cloud',    color: '#9CD5FF', top: '55%',    left: '10%',  size: '1.3rem', delay: 2   },
+  { icon: 'fas fa-paw',      color: '#c4d8ee', top: '38%',    left: '18%',  size: '1.1rem', delay: 1.1 },
+  { icon: 'fas fa-star',     color: '#b0c8d8', top: '65%',    right: '12%', size: '0.9rem', delay: 1.7 },
   { icon: 'fas fa-circle',   color: 'rgba(156,213,255,0.4)', top: '82%', left: '30%', size: '0.7rem', delay: 0.6 },
 ];
 
+// motion.span replaces motion.i — identical animation props, Icon rendered inside
 function FloatingDeco({ icon, color, top, left, right, bottom, size, delay }) {
   return (
-    <motion.i
-      className={`${icon} absolute select-none pointer-events-none`}
+    <motion.span
+      className="absolute select-none pointer-events-none inline-flex items-center justify-center"
       style={{ color, fontSize: size, top, left, right, bottom }}
       initial={{ opacity: 0, scale: 0, rotate: -30 }}
       animate={{
@@ -49,7 +55,9 @@ function FloatingDeco({ icon, color, top, left, right, bottom, size, delay }) {
         delay,
         times: [0, 0.25, 0.5, 0.75, 1],
       }}
-    />
+    >
+      <Icon name={icon} />
+    </motion.span>
   );
 }
 
@@ -86,7 +94,7 @@ function MagneticProfile({ children }) {
 }
 
 // Staggered letter animation for name
-function AnimatedName({ text, className, delay = 0, gradient = false }) {
+function AnimatedName({ text, className, delay = 0 }) {
   return (
     <span className={className} aria-label={text} style={{ display: 'inline-block' }}>
       {text.split('').map((char, i) => (
@@ -112,7 +120,7 @@ function AnimatedName({ text, className, delay = 0, gradient = false }) {
 // Hand-drawn SVG blob shape for the profile frame
 function HandDrawnProfileFrame({ w = 260, h = 300 }) {
   const rx = Math.min(w, h) * 0.46;
-  const p = 4; // padding from edge
+  const p = 4;
   return (
     <svg
       width={w} height={h}
@@ -120,7 +128,6 @@ function HandDrawnProfileFrame({ w = 260, h = 300 }) {
       style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2 }}
       fill="none"
     >
-      {/* Outer sketchy stroke */}
       <rect
         x={p} y={p} width={w - p*2} height={h - p*2}
         rx={rx} ry={rx}
@@ -131,7 +138,6 @@ function HandDrawnProfileFrame({ w = 260, h = 300 }) {
         fill="none"
         style={{ filter: 'url(#sketchy-filter)' }}
       />
-      {/* Inner offset stroke — hand-drawn double line */}
       <rect
         x={p+3} y={p+3} width={w - p*2 - 6} height={h - p*2 - 6}
         rx={rx - 3} ry={rx - 3}
@@ -144,6 +150,18 @@ function HandDrawnProfileFrame({ w = 260, h = 300 }) {
     </svg>
   );
 }
+
+const SOCIAL_LINKS = [
+  { Icon: FaGithub,    href: 'https://github.com/seijicxz',          label: 'GitHub'   },
+  { Icon: FaFacebookF, href: 'https://www.facebook.com/violeeee.07', label: 'Facebook' },
+  { Icon: FaLinkedin,  href: '#',                                     label: 'LinkedIn' },
+];
+
+const SKILL_BADGES = [
+  { label: 'React',   icon: 'fab fa-react', color: '#61DBFB', pos: { top: '30%',    left: '8px'  }, d: 0   },
+  { label: 'Next.js', icon: 'fas fa-code',  color: '#355872', pos: { top: '22%',    right: '8px' }, d: 0.5 },
+  { label: 'Figma',   icon: 'fab fa-figma', color: '#b0c8d8', pos: { bottom: '30%', left: '8px'  }, d: 1   },
+];
 
 export default function Hero() {
   const [roleIdx,   setRoleIdx]   = useState(0);
@@ -180,12 +198,6 @@ export default function Hero() {
     show:   { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 240, damping: 22 } },
   };
 
-  const SKILL_BADGES = [
-    { label: 'React',   icon: 'fab fa-react',  color: '#61DBFB', pos: { top: '30%',    left: '8px'  }, d: 0   },
-    { label: 'Next.js', icon: 'fas fa-code',   color: '#355872', pos: { top: '22%',    right: '8px' }, d: 0.5 },
-    { label: 'Figma',   icon: 'fab fa-figma',  color: '#b0c8d8', pos: { bottom: '30%', left: '8px'  }, d: 1   },
-  ];
-
   const PFP_W = 220;
   const PFP_H = 240;
 
@@ -193,14 +205,13 @@ export default function Hero() {
     <motion.section
       id="about"
       className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden"
-      
     >
-      {/* Floating decorations — hidden on mobile via CSS to reduce animated elements */}
+      {/* Floating decorations — hidden on mobile to reduce animated elements */}
       <div className="hidden md:contents">
         {DECOS.map((d, i) => <FloatingDeco key={i} {...d} />)}
       </div>
 
-      {/* Section-level soft glow behind content */}
+      {/* Section-level soft glow */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -215,7 +226,6 @@ export default function Hero() {
           {/* ── Text side ── */}
           <motion.div variants={container} initial="hidden" animate="show" className="order-2 md:order-1">
 
-            {/* Name with letter-by-letter reveal */}
             <motion.h1
               variants={item}
               className="font-display font-800 text-4xl md:text-5xl leading-none mb-4"
@@ -255,42 +265,40 @@ export default function Hero() {
             <motion.div variants={item} className="flex flex-wrap gap-3 mb-8">
               <motion.a
                 href="#contact"
-                className="btn-chiikawa btn-chiikawa-primary"
+                className="btn-chiikawa btn-chiikawa-primary inline-flex items-center gap-2"
                 onClick={e => { e.preventDefault(); document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' }); }}
                 whileHover={{ scale: 1.06, y: -4 }}
                 whileTap={{ scale: 0.92 }}
               >
-                <motion.i
-                  className="fas fa-paper-plane text-xs"
+                <motion.span
+                  className="inline-flex items-center"
                   animate={{ x: [0, 2, 0], y: [0, -2, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                />
+                >
+                  <FaPaperPlane className="text-xs" />
+                </motion.span>
                 Say Hello
               </motion.a>
               <motion.a
                 href="#projects"
-                className="btn-chiikawa btn-chiikawa-secondary"
+                className="btn-chiikawa btn-chiikawa-secondary inline-flex items-center gap-2"
                 onClick={e => { e.preventDefault(); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }); }}
                 whileHover={{ scale: 1.06, y: -4 }}
                 whileTap={{ scale: 0.92 }}
               >
-                <i className="fas fa-folder-open text-xs" /> My Projects
+                <FaFolderOpen className="text-xs" /> My Projects
               </motion.a>
             </motion.div>
 
             {/* Social links */}
             <motion.div variants={item} className="flex items-center gap-3">
-              {[
-                { icon: 'fab fa-github',     href: 'https://github.com/seijicxz',          label: 'GitHub'   },
-                { icon: 'fab fa-facebook-f', href: 'https://www.facebook.com/violeeee.07', label: 'Facebook' },
-                { icon: 'fab fa-linkedin',   href: '#',                                     label: 'LinkedIn' },
-              ].map((s, i) => (
+              {SOCIAL_LINKS.map(({ Icon: SocialIcon, href, label }, i) => (
                 <motion.a
-                  key={s.label}
-                  href={s.href}
+                  key={label}
+                  href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={s.label}
+                  aria-label={label}
                   className="w-11 h-11 sketchy-circle flex items-center justify-center bg-white/80 transition-all duration-200"
                   style={{ color: 'rgba(53,88,114,0.6)' }}
                   initial={{ opacity: 0, scale: 0, rotate: -45 }}
@@ -299,7 +307,7 @@ export default function Hero() {
                   whileHover={{ y: -6, scale: 1.18, rotate: 8, color: '#355872' }}
                   whileTap={{ scale: 0.88 }}
                 >
-                  <i className={s.icon} />
+                  <SocialIcon />
                 </motion.a>
               ))}
               <motion.div
@@ -328,14 +336,13 @@ export default function Hero() {
             transition={{ delay: 0.2, type: 'spring', stiffness: 160, damping: 14 }}
             className="order-1 md:order-2 flex items-center justify-center"
           >
-            {/* Outer wrapper — badges live here, outside MagneticProfile */}
             <div style={{ position: 'relative', width: PFP_W + 180, height: PFP_H + 120, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
-              {/* Skill badges — absolutely positioned, using table-cell to guarantee shrink-to-content */}
+              {/* Skill badges */}
               {SKILL_BADGES.map((b, i) => (
                 <div key={b.label} style={{ position: 'absolute', ...b.pos, display: 'table' }}>
                   <motion.div
-                    className="bg-white/90 sketchy-pill px-3 py-1.5 shadow-lg"
+                    className="bg-white/90 sketchy-pill px-3 py-1.5 shadow-lg inline-flex items-center gap-1"
                     style={{ display: 'table-cell', whiteSpace: 'nowrap', verticalAlign: 'middle' }}
                     initial={{ opacity: 0, scale: 0 }}
                     animate={{ opacity: 1, scale: 1, y: [0, -8, 0] }}
@@ -346,7 +353,7 @@ export default function Hero() {
                     }}
                     whileHover={{ scale: 1.14, y: -6, boxShadow: '0 10px 30px rgba(53,88,114,0.2)' }}
                   >
-                    <i className={`${b.icon} text-xs`} style={{ color: b.color, marginRight: '6px' }} />
+                    <Icon name={b.icon} className="text-xs" style={{ color: b.color }} />
                     <span className="text-xs font-body font-800" style={{ color: '#355872' }}>{b.label}</span>
                   </motion.div>
                 </div>
@@ -354,11 +361,7 @@ export default function Hero() {
 
               <MagneticProfile>
                 <div className="relative" style={{ width: PFP_W, height: PFP_H }}>
-
-                  {/* Hand-drawn border frame */}
                   <HandDrawnProfileFrame w={PFP_W} h={PFP_H} />
-
-                  {/* Profile photo */}
                   <motion.div
                     className="absolute inset-0 overflow-hidden"
                     style={{
@@ -380,7 +383,7 @@ export default function Hero() {
                 </div>
               </MagneticProfile>
 
-              {/* Mascot badge — separated from pfp, anchored to outer wrapper */}
+              {/* Mascot badge */}
               <motion.div
                 style={{ position: 'absolute', bottom: '20px', right: '70px' }}
                 className="bg-white sketchy-badge p-3 shadow-lg"
@@ -414,11 +417,14 @@ export default function Hero() {
           }}
         >
           <span className="text-xs font-body font-700 tracking-widest">scroll</span>
-          <motion.i
-            className="fas fa-chevron-down text-xs"
+          {/* motion.span replaces motion.i */}
+          <motion.span
+            className="inline-flex items-center text-xs"
             animate={{ y: [0, 4, 0] }}
             transition={{ duration: 1.2, repeat: Infinity }}
-          />
+          >
+            <FaChevronDown />
+          </motion.span>
         </motion.div>
       </div>
 
