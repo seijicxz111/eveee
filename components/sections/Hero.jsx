@@ -154,7 +154,7 @@ function HandDrawnProfileFrame({ w = 260, h = 300 }) {
 const SOCIAL_LINKS = [
   { Icon: FaGithub,    href: 'https://github.com/seijicxz',          label: 'GitHub'   },
   { Icon: FaFacebookF, href: 'https://www.facebook.com/violeeee.07', label: 'Facebook' },
-  { Icon: FaLinkedin,  href: '#',                                     label: 'LinkedIn' },
+  { Icon: FaLinkedin,  href: 'https://www.linkedin.com/in/cjsteeve-cadenas',     label: 'LinkedIn' },
 ];
 
 const SKILL_BADGES = [
