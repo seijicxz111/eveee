@@ -1,6 +1,7 @@
 import './globals.css'
 import localFont from 'next/font/local'
 import { Space_Mono } from 'next/font/google'
+import FontAwesomeLoader from '@/components/FontAwesomeLoader'
 
 const daruma = localFont({
   src: '../public/fonts/DarumadropOne-Regular.ttf',
@@ -31,12 +32,12 @@ export default function RootLayout({ children }) {
       className={`${daruma.variable} ${spaceMono.variable}`}
     >
       <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-        />
+        {/* Preconnect so the async FA load is faster when it fires */}
+        <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossOrigin="anonymous" />
       </head>
       <body className={`${daruma.variable} ${spaceMono.variable}`}>
+        {/* Font Awesome loaded async — never blocks render */}
+        <FontAwesomeLoader />
         {/* Hidden SVG filter definitions for sketchy/hand-drawn effect */}
         <svg width="0" height="0" style={{ position: 'absolute', overflow: 'hidden' }} aria-hidden="true">
           <defs>

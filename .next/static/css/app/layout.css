@@ -216,8 +216,7 @@ html,
   line-height: 1.5; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
   -moz-tab-size: 4; /* 3 */
-  -o-tab-size: 4;
-     tab-size: 4; /* 3 */
+  tab-size: 4; /* 3 */
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
   font-feature-settings: normal; /* 5 */
   font-variation-settings: normal; /* 6 */
@@ -515,11 +514,6 @@ textarea {
 1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
 2. Set the default placeholder color to the user's configured gray 400 color.
 */
-
-input::-moz-placeholder, textarea::-moz-placeholder {
-  opacity: 1; /* 1 */
-  color: #9ca3af; /* 2 */
-}
 
 input::placeholder,
 textarea::placeholder {
@@ -907,7 +901,6 @@ video {
 }
 .select-none {
   -webkit-user-select: none;
-     -moz-user-select: none;
           user-select: none;
 }
 .resize {
@@ -1133,12 +1126,10 @@ video {
   --tw-gradient-to: #9CD5FF var(--tw-gradient-to-position);
 }
 .object-contain {
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 .object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .p-0\.5 {
   padding: 0.125rem;
@@ -1374,10 +1365,13 @@ video {
 }
 .backdrop-blur-sm {
   --tw-backdrop-blur: blur(4px);
+  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
 }
 .transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -1522,9 +1516,40 @@ body {
   .bg-orb, .bg-dots { animation: none !important; }
 }
 
-/* ── Mobile: pause expensive background orb animations to cut main-thread work ── */
+/* ── Mobile: disable all expensive GPU effects ─────────────────────────────── */
+/*    Pausing alone isn't enough — blur(80px) + mix-blend-mode still force      */
+/*    compositing layers even on a static element. Hide them entirely.           */
 @media (max-width: 767px) {
-  .bg-orb { animation-play-state: paused !important; }
+  /* Kill background orbs — filter:blur + mix-blend-mode cost GPU even paused */
+  .bg-orb { display: none !important; }
+
+  /* Remove all SVG turbulence/displacement filters — feTurbulence is one of   */
+  /* the most expensive operations on mobile GPUs                               */
+  .chiikawa-card,
+  .glass-soft,
+  .sketchy-circle,
+  .sketchy-pill,
+  .sketchy-badge,
+  .icon-sq,
+  .icon-sq-sketchy,
+  .skill-card-sketchy,
+  .tab-btn-sketchy,
+  .tab-btn-sketchy-active,
+  .tag-pill,
+  #scroll-progress,
+  .navbar-sketchy-border,
+  .timeline-dot,
+  .btn-chiikawa,
+  .btn-chiikawa-primary,
+  .btn-chiikawa-secondary { filter: none !important; }
+
+  /* Remove backdrop-filter — forces a new compositing layer on every element  */
+  .chiikawa-card,
+  .glass-soft {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(247, 248, 240, 0.97) !important;
+  }
 }
 
 /* ── Scrollbar ── */
@@ -1534,10 +1559,6 @@ body {
 ::-webkit-scrollbar-thumb:hover { background: var(--deep); }
 
 /* ── Selection ── */
-::-moz-selection {
-  background: rgba(156,213,255,0.45);
-  color: var(--deep);
-}
 ::selection {
   background: rgba(156,213,255,0.45);
   color: var(--deep);
@@ -1685,7 +1706,6 @@ body {
   transition: border-color 0.25s, box-shadow 0.25s;
   resize: none;
 }
-.chiikawa-input::-moz-placeholder { color: rgba(53,88,114,0.38); }
 .chiikawa-input::placeholder { color: rgba(53,88,114,0.38); }
 .chiikawa-input:focus {
   border-color: var(--mid);
@@ -1866,9 +1886,7 @@ body {
     -2px 1px 0 0.5px rgba(156,213,255,0.12),
     0 4px 14px rgba(53,88,114,0.13);
   filter: url(#rough-pill);
-  width: -moz-max-content;
   width: max-content;
-  max-width: -moz-max-content;
   max-width: max-content;
   white-space: nowrap;
   display: inline-flex;

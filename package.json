@@ -8,6 +8,12 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "browserslist": [
+    "chrome >= 87",
+    "edge >= 88",
+    "firefox >= 78",
+    "safari >= 14"
+  ],
   "dependencies": {
     "@react-three/drei": "^9.107.2",
     "@react-three/fiber": "^8.16.8",

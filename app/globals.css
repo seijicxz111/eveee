@@ -129,9 +129,40 @@ body {
   .bg-orb, .bg-dots { animation: none !important; }
 }
 
-/* ── Mobile: pause expensive background orb animations to cut main-thread work ── */
+/* ── Mobile: disable all expensive GPU effects ─────────────────────────────── */
+/*    Pausing alone isn't enough — blur(80px) + mix-blend-mode still force      */
+/*    compositing layers even on a static element. Hide them entirely.           */
 @media (max-width: 767px) {
-  .bg-orb { animation-play-state: paused !important; }
+  /* Kill background orbs — filter:blur + mix-blend-mode cost GPU even paused */
+  .bg-orb { display: none !important; }
+
+  /* Remove all SVG turbulence/displacement filters — feTurbulence is one of   */
+  /* the most expensive operations on mobile GPUs                               */
+  .chiikawa-card,
+  .glass-soft,
+  .sketchy-circle,
+  .sketchy-pill,
+  .sketchy-badge,
+  .icon-sq,
+  .icon-sq-sketchy,
+  .skill-card-sketchy,
+  .tab-btn-sketchy,
+  .tab-btn-sketchy-active,
+  .tag-pill,
+  #scroll-progress,
+  .navbar-sketchy-border,
+  .timeline-dot,
+  .btn-chiikawa,
+  .btn-chiikawa-primary,
+  .btn-chiikawa-secondary { filter: none !important; }
+
+  /* Remove backdrop-filter — forces a new compositing layer on every element  */
+  .chiikawa-card,
+  .glass-soft {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(247, 248, 240, 0.97) !important;
+  }
 }
 
 /* ── Scrollbar ── */

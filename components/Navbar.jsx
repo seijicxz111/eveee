@@ -108,7 +108,8 @@ export default function Navbar() {
               animate={logoHovered ? { rotate: [0, -8, 8, -4, 0], scale: 1.1 } : { rotate: 0, scale: 1 }}
               transition={{ duration: 0.5, type: 'spring', stiffness: 300, damping: 15 }}
             >
-              <Image src="/icon.png" alt="logo" fill className="object-contain p-0.5" />
+              {/* priority removes loading="lazy" and adds fetchpriority="high" — this is the LCP element */}
+              <Image src="/icon.png" alt="logo" fill sizes="36px" priority className="object-contain p-0.5" />
             </motion.div>
             <motion.span
               className="font-display font-800 text-[var(--deep)] text-lg leading-none"
@@ -227,7 +228,7 @@ export default function Navbar() {
                     className="relative w-9 h-9 rounded-2xl overflow-hidden bg-white sketchy-badge"
                     style={{ border: '2px solid rgba(122,170,206,0.6)' }}
                   >
-                    <Image src="/icon.png" alt="logo" fill className="object-contain p-0.5" />
+                    <Image src="/icon.png" alt="logo" fill sizes="36px" className="object-contain p-0.5" />
                   </div>
                   <span className="font-display font-800 text-[var(--deep)] text-base">Seijicxz</span>
                 </div>
