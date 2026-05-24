@@ -130,17 +130,20 @@ export default function Navbar() {
                 transition={{ delay: 0.1 + i * 0.07, type: 'spring', stiffness: 300 }}
                 className={`relative px-4 py-2 rounded-full text-sm font-body font-700 transition-colors duration-200 ${
                   activeSection === link.href.slice(1)
-                    ? 'text-[var(--deep)]'
+                    ? 'text-white z-10'
                     : 'text-[var(--deep)]/60 hover:text-[var(--deep)]'
                 }`}
                 whileHover={{ scale: 1.06 }}
                 whileTap={{ scale: 0.94 }}
               >
-                {link.label}
+                <span className="relative z-10">{link.label}</span>
                 {activeSection === link.href.slice(1) && (
                   <motion.span
                     layoutId="nav-indicator"
-                    className="absolute inset-0 rounded-full bg-[var(--mid)]/30 border border-[var(--mid)]/50"
+                    className="absolute inset-0 rounded-full bg-[var(--deep)]"
+                    style={{
+                      boxShadow: '0 2px 12px rgba(53,88,114,0.35), 0 1px 4px rgba(53,88,114,0.2)',
+                    }}
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}

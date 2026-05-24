@@ -32,10 +32,37 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus('sending');
-    await new Promise(r => setTimeout(r, 1500));
-    setStatus('sent');
-    setForm({ name: '', email: '', message: '' });
-    setTimeout(() => setStatus('idle'), 4000);
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+       
+          access_key: 'f5890b8c-df2b-48a3-a500-f0bef86d7059',
+          subject: `Portfolio message from ${form.name}`,
+          from_name: form.name,
+          email: form.email,
+          message: form.message,
+  
+          botcheck: '',
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setStatus('sent');
+        setForm({ name: '', email: '', message: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 4000);
+      }
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   const handleCopy = (text, label) => {
@@ -174,6 +201,31 @@ export default function Contact() {
                     <h4 className="font-display font-800 text-deep text-xl mb-2">Message sent!</h4>
                     <p className="text-deep/50 font-body text-sm">Thanks for reaching out. I'll get back to you soon~</p>
                   </motion.div>
+                ) : status === 'error' ? (
+                  <motion.div
+                    key="error"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    className="text-center py-10"
+                    transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                  >
+                    <motion.span
+                      className="text-rose-400 text-5xl mb-3 flex justify-center"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 20, delay: 0.1 }}
+                    >
+                      <Icon name="fas fa-circle-exclamation" />
+                    </motion.span>
+                    <h4 className="font-display font-800 text-deep text-xl mb-2">Something went wrong</h4>
+                    <p className="text-deep/50 font-body text-sm">
+                      Try emailing me directly at{' '}
+                      <a href="mailto:cjsteevecadenas0@gmail.com" className="text-mid hover:underline">
+                        cjsteevecadenas0@gmail.com
+                      </a>
+                    </p>
+                  </motion.div>
                 ) : (
                   <motion.form
                     key="form"
@@ -183,6 +235,9 @@ export default function Contact() {
                     animate="visible"
                     variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
                   >
+                    {/* Honeypot — bots fill this, humans don't; Web3Forms rejects the submission */}
+                    <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} readOnly />
+
                     <div className="grid sm:grid-cols-2 gap-4">
                       <motion.div custom={0} variants={fieldVariants}>
                         <label className="block text-xs font-body font-700 text-deep/60 mb-1.5">Name</label>
