@@ -59,6 +59,19 @@ const CERTS = [
     dotColor: 'from-yellow-300 to-amber-400',
     link: '/certs/securecoding_cert.pdf',
   },
+  {
+    type: 'cert',
+    icon: 'fab fa-python',
+    iconColor: '#3776AB',
+    title: 'Python Essentials 1',
+    org: 'Cisco Networking Academy',
+    period: 'May 2026',
+    desc: 'Completed Python Essentials 1 offered by Networking Academy through the Cisco Networking Academy program.',
+    tags: ['Certificate', 'Cisco', 'Python'],
+    color: 'bg-sky/10 border-sky/30',
+    dotColor: 'from-blue-300 to-blue-500',
+    link: '/certs/python_cert.pdf',
+  },
 ];
 
 function TimelineItem({ item, index }) {

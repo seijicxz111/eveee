@@ -1,13 +1,13 @@
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[13].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"app\\layout.jsx","import":"","arguments":[{"src":"../public/fonts/DarumadropOne-Regular.ttf","variable":"--font-daruma","display":"swap"}],"variableName":"daruma"} ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[3].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[13].oneOf[3].use[2]!./node_modules/next/font/local/target.css?{"path":"app\\layout.jsx","import":"","arguments":[{"src":"../public/fonts/DarumadropOne-Regular.woff2","variable":"--font-daruma","display":"swap"}],"variableName":"daruma"} ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 @font-face {
-font-family: '__daruma_16a834';
-src: url(/_next/static/media/8b93adca8ebf665e-s.p.ttf) format('truetype');
+font-family: '__daruma_670e46';
+src: url(/_next/static/media/3985654d5b203efc-s.p.woff2) format('woff2');
 font-display: swap;
-}@font-face {font-family: '__daruma_Fallback_16a834';src: local("Arial");ascent-override: 116.21%;descent-override: 28.85%;line-gap-override: 0.00%;size-adjust: 99.82%
-}.__className_16a834 {font-family: '__daruma_16a834', '__daruma_Fallback_16a834'
-}.__variable_16a834 {--font-daruma: '__daruma_16a834', '__daruma_Fallback_16a834'
+}@font-face {font-family: '__daruma_Fallback_670e46';src: local("Arial");ascent-override: 116.21%;descent-override: 28.85%;line-gap-override: 0.00%;size-adjust: 99.82%
+}.__className_670e46 {font-family: '__daruma_670e46', '__daruma_Fallback_670e46'
+}.__variable_670e46 {--font-daruma: '__daruma_670e46', '__daruma_Fallback_670e46'
 }
 
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
@@ -1040,6 +1040,9 @@ video {
 .border-sun\/50 {
   border-color: rgb(255 240 194 / 0.5);
 }
+.bg-\[var\(--deep\)\] {
+  background-color: var(--deep);
+}
 .bg-black\/20 {
   background-color: rgb(0 0 0 / 0.2);
 }
@@ -1093,6 +1096,11 @@ video {
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
 }
+.from-blue-300 {
+  --tw-gradient-from: #93c5fd var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(147 197 253 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
 .from-emerald-300 {
   --tw-gradient-from: #6ee7b7 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(110 231 183 / 0) var(--tw-gradient-to-position);
@@ -1118,6 +1126,9 @@ video {
 }
 .to-blossom {
   --tw-gradient-to: #FFD6E0 var(--tw-gradient-to-position);
+}
+.to-blue-500 {
+  --tw-gradient-to: #3b82f6 var(--tw-gradient-to-position);
 }
 .to-emerald-400 {
   --tw-gradient-to: #34d399 var(--tw-gradient-to-position);
@@ -1331,6 +1342,10 @@ video {
 .text-mid {
   --tw-text-opacity: 1;
   color: rgb(122 170 206 / var(--tw-text-opacity, 1));
+}
+.text-rose-400 {
+  --tw-text-opacity: 1;
+  color: rgb(251 113 133 / var(--tw-text-opacity, 1));
 }
 .text-white {
   --tw-text-opacity: 1;
@@ -2266,6 +2281,9 @@ footer::before {
 .hover\:text-white:hover {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+.hover\:underline:hover {
+  text-decoration-line: underline;
 }
 @media (min-width: 640px) {
 
