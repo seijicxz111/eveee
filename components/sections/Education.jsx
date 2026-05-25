@@ -35,8 +35,8 @@ const EDUCATION = [
 const CERTS = [
   {
     type: 'cert',
-    // Godot icon — game dev cert
-    imgSrc: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg',
+    // Terminal/console icon — game dev cert
+    icon: 'fas fa-terminal',
     iconColor: '#4a8fcb',
     title: 'Introduction to Game Development',
     org: 'Codecademy',
